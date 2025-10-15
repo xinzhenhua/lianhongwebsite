@@ -1757,7 +1757,7 @@
             setupEventListeners();
         });
 
-        // 初始化数据到LeanCloud
+        // 初始化数据到LeanCloud - 已修复ACL权限问题
         async function initializeData() {
             try {
                 // 检查WebsiteContent是否已存在数据
@@ -1775,6 +1775,12 @@
                     content.set('cases', initialData.cases);
                     content.set('craftsmanship', initialData.craftsmanship);
                     content.set('about', initialData.about);
+                    
+                    // 设置ACL权限 - 修复写入权限问题
+                    const acl = new AV.ACL();
+                    acl.setPublicWriteAccess(true);
+                    acl.setPublicReadAccess(true);
+                    content.setACL(acl);
                     
                     await content.save();
                     console.log('初始WebsiteContent数据已保存到LeanCloud');
@@ -1798,6 +1804,13 @@
                         const WebsiteContent = AV.Object.extend('WebsiteContent');
                         const content = new WebsiteContent();
                         content.set('test', 'init');
+                        
+                        // 设置ACL权限
+                        const acl = new AV.ACL();
+                        acl.setPublicWriteAccess(true);
+                        acl.setPublicReadAccess(true);
+                        content.setACL(acl);
+                        
                         await content.save();
                         console.log('WebsiteContent Class创建成功');
                         // 重新初始化数据
@@ -1834,7 +1847,7 @@
             }
         }
 
-        // 保存网站内容
+        // 保存网站内容 - 已修复ACL权限问题
         async function saveWebsiteContent(key, data) {
             try {
                 const query = new AV.Query('WebsiteContent');
@@ -1842,6 +1855,13 @@
                 
                 if (content) {
                     content.set(key, data);
+                    
+                    // 设置写入权限为所有人可写 - 修复写入权限问题
+                    const acl = new AV.ACL();
+                    acl.setPublicWriteAccess(true);
+                    acl.setPublicReadAccess(true);
+                    content.setACL(acl);
+                    
                     await content.save();
                     console.log(`${key} 数据保存成功`);
                     return true;
@@ -1859,6 +1879,12 @@
                     
                     // 更新特定的key
                     content.set(key, data);
+                    
+                    // 设置写入权限为所有人可写 - 修复写入权限问题
+                    const acl = new AV.ACL();
+                    acl.setPublicWriteAccess(true);
+                    acl.setPublicReadAccess(true);
+                    content.setACL(acl);
                     
                     await content.save();
                     console.log(`新的WebsiteContent创建成功，${key} 数据已保存`);
