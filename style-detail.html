@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计风格解读 | 连宏整装</title>
+    <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.13.2/dist/av-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #ffffff;
+            --bg-color: #000000;
+            --accent-color: #c9a96e;
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 30px 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        nav.scrolled {
+            padding: 15px 0;
+            background: rgba(0, 0, 0, 0.95);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 40px;
+        }
+        
+        .nav-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        /* 风格详情区域 */
+        .style-detail {
+            padding: 150px 0 80px;
+        }
+        
+        .style-header {
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        
+        .style-header h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        
+        .style-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .style-table {
+            margin-bottom: 80px;
+            overflow-x: auto;
+        }
+        
+        .style-table table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .style-table th, .style-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .style-table th {
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+        
+        .style-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .style-description {
+            margin-bottom: 80px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .style-description p {
+            margin-bottom: 25px;
+        }
+        
+        .style-images {
+            margin-bottom: 80px;
+        }
+        
+        .style-images h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .image-card {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: var(--primary-color);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .image-card:hover .image-caption {
+            opacity: 1;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .back-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .back-btn:hover {
+            color: var(--bg-color);
+            border-color: var(--accent-color);
+        }
+        
+        .back-btn:hover:before {
+            left: 0;
+        }
+        
+        /* 管理员面板 */
+        .admin-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+        
+        .admin-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .admin-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .admin-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .admin-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .admin-form {
+            background: #111;
+            padding: 40px;
+            width: 90%;
+            max-width: 800px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .admin-form h3 {
+            margin-bottom: 30px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary-color);
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .upload-section {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .upload-section.active {
+            display: block;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-btn {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--accent-color);
+        }
+        
+        .tab-btn.active:after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .image-preview {
+            margin-top: 10px;
+            max-width: 100%;
+            max-height: 200px;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .image-preview.active {
+            display: block;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .file-label:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            color: var(--bg-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn:hover:before {
+            left: 0;
+        }
+        
+        .btn-accent {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background: transparent;
+            color: var(--accent-color);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        /* 页脚 */
+        footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+        
+        .footer-about p {
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        /* 动画 */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .style-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .images-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <div class="logo">连宏整装</div>
+            <ul class="nav-links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="index.html#about">关于我们</a></li>
+                <li><a href="index.html#pioneers">致敬先驱</a></li>
+                <li><a href="index.html#services">服务方案</a></li>
+                <li><a href="index.html#styles">设计风格</a></li>
+                <li><a href="index.html#club">精英俱乐部</a></li>
+                <li><a href="index.html#contact">联系我们</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 风格详情区域 -->
+    <section class="style-detail">
+        <div class="container">
+            <div class="style-header">
+                <h1 id="style-title">现代简约风</h1>
+                <p id="style-subtitle">形式追随功能，少即是多</p>
+            </div>
+            
+            <div class="style-table">
+                <table id="style-detail-table">
+                    <tr>
+                        <th>风格名称</th>
+                        <td id="style-name">现代简约风</td>
+                    </tr>
+                    <tr>
+                        <th>核心理念</th>
+                        <td id="style-concept">形式追随功能，少即是多</td>
+                    </tr>
+                    <tr>
+                        <th>风格特点</th>
+                        <td id="style-features">线条简洁、色彩素雅（黑、白、灰）、功能至上、空间开放</td>
+                    </tr>
+                    <tr>
+                        <th>开创/关键人物与流行背景</th>
+                        <td id="style-key-figures">路德维希·密斯·凡德罗（提出"少即是多"）；源于20世纪初的现代主义运动</td>
+                    </tr>
+                    <tr>
+                        <th>代表性作品/元素</th>
+                        <td id="style-representative">巴塞罗那德国馆、范斯沃斯住宅</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="style-description">
+                <h2>风格解读</h2>
+                <div id="style-description-content">
+                    <p>现代简约风的核心是"形式追随功能"与"少即是多"。它摒弃一切冗余装饰，强调空间的开放性与功能性，运用简洁利落的线条与中性素雅的色调（如黑、白、灰），营造出理性、通透且宁静的氛围。</p>
+                    <p>其开创者是德国建筑大师路德维希·密斯·凡德罗，他的经典作品巴塞罗那德国馆和范斯沃斯住宅，完美诠释了流动空间与极致简约的美学理念。</p>
+                </div>
+            </div>
+            
+            <div class="style-images">
+                <h2>图片案例</h2>
+                <div class="images-grid" id="style-images-container">
+                    <!-- 图片将通过JavaScript动态添加 -->
+                </div>
+            </div>
+            
+            <a href="index.html#styles" class="back-btn">返回风格列表</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">连宏整装</div>
+                    <p>连宏整装，致敬每一个认真生活的你。我们不仅装修房屋，更为您构筑通往更高圈层的桥梁。</p>
+                </div>
+                <div class="footer-links">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="index.html#about">关于我们</a></li>
+                        <li><a href="index.html#pioneers">致敬先驱</a></li>
+                        <li><a href="index.html#services">服务方案</a></li>
+                        <li><a href="index.html#styles">设计风格</a></li>
+                        <li><a href="index.html#club">精英俱乐部</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>联系我们</h4>
+                    <p>地址：西安市中心莲湖区天乙大厦4楼</p>
+                    <p>电话：13572145395</p>
+                    <p>邮箱：tedsin@qq.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 连宏整装. 版权所有.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 管理员面板 -->
+    <div class="admin-panel">
+        <div class="admin-btn" id="adminBtn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19.4 15C19.2662 15.3037 19.1355 15.6064 19.0078 15.9082C18.6942 16.6743 18.3828 17.4375 18.0734 18.1977C17.957 18.4766 17.841 18.755 17.7253 19.0329C17.5469 19.4586 17.0223 19.6589 16.5966 19.4805C16.4522 19.4194 16.3168 19.3414 16.1936 19.2485C15.2929 18.5597 14.3922 17.8709 13.4915 17.1821C13.1994 16.9558 12.8062 16.9558 12.5141 17.1821C11.6134 17.8709 10.7127 18.5597 9.81201 19.2485C9.68877 19.3414 9.55341 19.4194 9.409 19.4805C8.98333 19.6589 8.45874 19.4586 8.28033 19.0329C8.16461 18.755 8.04861 18.4766 7.93223 18.1977C7.62279 17.4375 7.31141 16.6743 6.99782 15.9082C6.87011 15.6064 6.73941 15.3037 6.60564 15C6.73941 14.6963 6.87011 14.3936 6.99782 14.0918C7.31141 13.3257 7.62279 12.5625 7.93223 11.8023C8.04861 11.5234 8.16461 11.245 8.28033 10.9671C8.45874 10.5414 8.98333 10.3411 9.409 10.5195C9.55341 10.5806 9.68877 10.6586 9.81201 10.7515C10.7127 11.4403 11.6134 12.1291 12.5141 12.8179C12.8062 13.0442 13.1994 13.0442 13.4915 12.8179C14.3922 12.1291 15.2929 11.4403 16.1936 10.7515C16.3168 10.6586 16.4522 10.5806 16.5966 10.5195C17.0223 10.3411 17.5469 10.5414 17.7253 10.9671C17.841 11.245 17.957 11.5234 18.0734 11.8023C18.3828 12.5625 18.6942 13.3257 19.0078 14.0918C19.1355 14.3936 19.2662 14.6963 19.4 15Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- 管理员模态框 -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-form">
+            <h3>管理员登录</h3>
+            <div class="form-group">
+                <label for="adminPassword">管理员密码</label>
+                <input type="password" id="adminPassword" placeholder="请输入管理员密码">
+            </div>
+            <div class="btn-group">
+                <button class="btn" id="loginBtn">登录</button>
+                <button class="btn" id="closeModal">关闭</button>
+            </div>
+            
+            <div class="upload-section" id="uploadSection">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="style-management">设计风格管理</button>
+                    <button class="tab-btn" data-tab="image-management">图片URL管理</button>
+                </div>
+                
+                <!-- 设计风格管理标签页 -->
+                <div class="tab-content active" id="style-management">
+                    <h4>设计风格数据管理</h4>
+                    <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.7);">您可以通过Excel模板批量管理设计风格数据</p>
+                    
+                    <div class="btn-group">
+                        <button class="btn" id="downloadTemplate">下载Excel模板</button>
+                        <label for="excelFile" class="file-label">上传Excel文件</label>
+                        <input type="file" id="excelFile" class="file-input" accept=".xlsx, .xls">
+                    </div>
+                    
+                    <div id="uploadStatus" style="margin-top: 20px;"></div>
+                    
+                    <div style="margin-top: 30px;">
+                        <h4>手动添加/编辑风格</h4>
+                        <div class="form-group">
+                            <label for="styleNameInput">风格名称</label>
+                            <input type="text" id="styleNameInput" placeholder="请输入风格名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="styleConceptInput">核心理念</label>
+                            <input type="text" id="styleConceptInput" placeholder="请输入核心理念">
+                        </div>
+                        <div class="form-group">
+                            <label for="styleFeaturesInput">风格特点</label>
+                            <textarea id="styleFeaturesInput" placeholder="请输入风格特点"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="styleKeyFiguresInput">开创/关键人物与流行背景</label>
+                            <textarea id="styleKeyFiguresInput" placeholder="请输入开创/关键人物与流行背景"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="styleRepresentativeInput">代表性作品/元素</label>
+                            <textarea id="styleRepresentativeInput" placeholder="请输入代表性作品/元素"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="styleDescriptionInput">详细描述</label>
+                            <textarea id="styleDescriptionInput" placeholder="请输入详细描述"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="styleImagesInput">图片URL（多个URL用逗号分隔）</label>
+                            <textarea id="styleImagesInput" placeholder="请输入图片URL，多个URL用逗号分隔"></textarea>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn-accent" id="saveStyleBtn">保存风格数据</button>
+                            <button class="btn" id="clearFormBtn">清空表单</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 图片URL管理标签页 -->
+                <div class="tab-content" id="image-management">
+                    <h4>图片URL管理</h4>
+                    <div class="form-group">
+                        <label for="heroImageUrl">主页背景图片URL</label>
+                        <input type="text" id="heroImageUrl" placeholder="请输入图片URL">
+                        <img id="heroPreview" class="image-preview">
+                    </div>
+                    <div class="form-group">
+                        <label for="aboutImageUrl">关于我们图片URL</label>
+                        <input type="text" id="aboutImageUrl" placeholder="请输入图片URL">
+                        <img id="aboutPreview" class="image-preview">
+                    </div>
+                    <div class="form-group">
+                        <label for="wrightImageUrl">莱特人物图片URL</label>
+                        <input type="text" id="wrightImageUrl" placeholder="请输入图片URL">
+                        <img id="wrightPreview" class="image-preview">
+                    </div>
+                    <div class="form-group">
+                        <label for="liangImageUrl">梁思成人物图片URL</label>
+                        <input type="text" id="liangImageUrl" placeholder="请输入图片URL">
+                        <img id="liangPreview" class="image-preview">
+                    </div>
+                    <div class="form-group">
+                        <label for="clubImageUrl">精英俱乐部图片URL</label>
+                        <input type="text" id="clubImageUrl" placeholder="请输入图片URL">
+                        <img id="clubPreview" class="image-preview">
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-accent" id="saveImageUrls">保存图片URL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      // 初始化 LeanCloud
+AV.init({
+    appId: 'rvAEarrQpxABj487BHhcN68C-gzGzoHsz',
+    appKey: '5c6aQZeAfdRfj4TD8gOHZUgJ',
+    serverURL: 'https://rvaearrq.lc-cn-n1-shared.com'
+});
+
+// 页面加载时从LeanCloud获取当前风格数据
+document.addEventListener('DOMContentLoaded', function() {
+    // 从URL参数获取风格名称
+    const urlParams = new URLSearchParams(window.location.search);
+    const styleName = urlParams.get('style');
+    
+    if (styleName) {
+        loadStyleDetail(styleName);
+    } else {
+        // 如果没有指定风格，默认显示第一个风格
+        loadStyleDetail('现代简约风');
+    }
+    
+    loadImagesFromLeanCloud();
+});
+
+// 从LeanCloud加载风格详情
+function loadStyleDetail(styleName) {
+    const query = new AV.Query('DesignStyle');
+    query.equalTo('styleName', styleName);
+    query.first().then((style) => {
+        if (style) {
+            // 更新页面内容
+            document.getElementById('style-title').textContent = style.get('styleName');
+            document.getElementById('style-subtitle').textContent = style.get('coreConcept');
+            
+            document.getElementById('style-name').textContent = style.get('styleName');
+            document.getElementById('style-concept').textContent = style.get('coreConcept');
+            document.getElementById('style-features').textContent = style.get('styleFeatures');
+            document.getElementById('style-key-figures').textContent = style.get('keyFigures');
+            document.getElementById('style-representative').textContent = style.get('representativeWorks');
+            
+            // 更新描述
+            const descriptionContent = document.getElementById('style-description-content');
+            descriptionContent.innerHTML = '';
+            
+            const descriptionText = style.get('description');
+            if (descriptionText) {
+                const paragraphs = descriptionText.split('\n');
+                paragraphs.forEach(paragraph => {
+                    if (paragraph.trim()) {
+                        const p = document.createElement('p');
+                        p.textContent = paragraph;
+                        descriptionContent.appendChild(p);
+                    }
+                });
+            }
+            
+            // 更新图片
+            const imagesContainer = document.getElementById('style-images-container');
+            imagesContainer.innerHTML = '';
+            
+            const images = style.get('images') || [];
+            images.forEach(imageUrl => {
+                if (imageUrl.trim()) {
+                    const imageCard = document.createElement('div');
+                    imageCard.className = 'image-card';
+                    
+                    const img = document.createElement('img');
+                    img.src = imageUrl;
+                    img.alt = style.get('styleName') + '设计案例';
+                    
+                    const caption = document.createElement('div');
+                    caption.className = 'image-caption';
+                    caption.textContent = style.get('styleName') + '设计案例';
+                    
+                    imageCard.appendChild(img);
+                    imageCard.appendChild(caption);
+                    imagesContainer.appendChild(imageCard);
+                }
+            });
+            
+            // 如果没有图片，显示提示信息
+            if (images.length === 0) {
+                const noImagesMsg = document.createElement('p');
+                noImagesMsg.textContent = '暂无图片案例';
+                noImagesMsg.style.textAlign = 'center';
+                noImagesMsg.style.color = 'rgba(255, 255, 255, 0.5)';
+                imagesContainer.appendChild(noImagesMsg);
+            }
+        } else {
+            // 风格不存在
+            document.getElementById('style-title').textContent = '风格未找到';
+            document.getElementById('style-subtitle').textContent = '请检查风格名称是否正确';
+        }
+    }).catch(error => {
+        console.error('加载风格详情失败:', error);
+        document.getElementById('style-title').textContent = '加载失败';
+        document.getElementById('style-subtitle').textContent = '请稍后重试';
+    });
+}
+
+// 从LeanCloud加载图片URL
+function loadImagesFromLeanCloud() {
+    const query = new AV.Query('SiteImages');
+    query.first().then((imageSettings) => {
+        if (imageSettings) {
+            const heroImageUrl = imageSettings.get('heroImageUrl');
+            const aboutImageUrl = imageSettings.get('aboutImageUrl');
+            const wrightImageUrl = imageSettings.get('wrightImageUrl');
+            const liangImageUrl = imageSettings.get('liangImageUrl');
+            const clubImageUrl = imageSettings.get('clubImageUrl');
+            
+            if (heroImageUrl) {
+                updateImageWithCacheBusting('hero-bg-image', heroImageUrl);
+            }
+            
+            if (aboutImageUrl) {
+                updateImageWithCacheBusting('about-image', aboutImageUrl);
+            }
+            
+            if (wrightImageUrl) {
+                updateImageWithCacheBusting('wright-image', wrightImageUrl);
+            }
+            
+            if (liangImageUrl) {
+                updateImageWithCacheBusting('liang-image', liangImageUrl);
+            }
+            
+            if (clubImageUrl) {
+                updateImageWithCacheBusting('club-image', clubImageUrl);
+            }
+        }
+    }).catch(error => {
+        console.error('加载图片设置失败:', error);
+    });
+}
+
+// 更新图片并添加缓存破坏参数
+function updateImageWithCacheBusting(elementId, imageUrl) {
+    if (!imageUrl) return;
+    
+    // 添加时间戳参数防止缓存
+    const timestamp = new Date().getTime();
+    const separator = imageUrl.includes('?') ? '&' : '?';
+    const cacheBustedUrl = imageUrl + separator + 't=' + timestamp;
+    
+    const imgElement = document.getElementById(elementId);
+    if (imgElement) {
+        imgElement.src = cacheBustedUrl;
+        imgElement.onload = function() {
+            console.log('图片加载成功:', elementId);
+        };
+        imgElement.onerror = function() {
+            console.error('图片加载失败:', elementId, cacheBustedUrl);
+        };
+    }
+}
+
+// 导航栏滚动效果
+window.addEventListener('scroll', function() {
+    const navbar = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
+
+// 管理员功能
+document.getElementById('adminBtn').addEventListener('click', function() {
+    document.getElementById('adminModal').classList.add('active');
+});
+
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('adminModal').classList.remove('active');
+});
+
+// 标签页切换
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        // 移除所有标签页的活动状态
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        // 设置当前标签页为活动状态
+        this.classList.add('active');
+        const tabId = this.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+    });
+});
+
+// 管理员登录
+document.getElementById('loginBtn').addEventListener('click', function() {
+    const password = document.getElementById('adminPassword').value;
+    if (password === '13572145395') {
+        document.getElementById('uploadSection').classList.add('active');
+        alert('登录成功！您现在可以管理设计风格数据。');
+        
+        // 加载当前图片URL设置
+        const query = new AV.Query('SiteImages');
+        query.first().then((imageSettings) => {
+            if (imageSettings) {
+                document.getElementById('heroImageUrl').value = imageSettings.get('heroImageUrl') || '';
+                document.getElementById('aboutImageUrl').value = imageSettings.get('aboutImageUrl') || '';
+                document.getElementById('wrightImageUrl').value = imageSettings.get('wrightImageUrl') || '';
+                document.getElementById('liangImageUrl').value = imageSettings.get('liangImageUrl') || '';
+                document.getElementById('clubImageUrl').value = imageSettings.get('clubImageUrl') || '';
+                
+                // 更新预览
+                if (imageSettings.get('heroImageUrl')) {
+                    updateImageWithCacheBusting('heroPreview', imageSettings.get('heroImageUrl'));
+                    document.getElementById('heroPreview').classList.add('active');
+                }
+                if (imageSettings.get('aboutImageUrl')) {
+                    updateImageWithCacheBusting('aboutPreview', imageSettings.get('aboutImageUrl'));
+                    document.getElementById('aboutPreview').classList.add('active');
+                }
+                if (imageSettings.get('wrightImageUrl')) {
+                    updateImageWithCacheBusting('wrightPreview', imageSettings.get('wrightImageUrl'));
+                    document.getElementById('wrightPreview').classList.add('active');
+                }
+                if (imageSettings.get('liangImageUrl')) {
+                    updateImageWithCacheBusting('liangPreview', imageSettings.get('liangImageUrl'));
+                    document.getElementById('liangPreview').classList.add('active');
+                }
+                if (imageSettings.get('clubImageUrl')) {
+                    updateImageWithCacheBusting('clubPreview', imageSettings.get('clubImageUrl'));
+                    document.getElementById('clubPreview').classList.add('active');
+                }
+            }
+        }).catch(error => {
+            console.error('加载图片设置失败:', error);
+        });
+        
+    } else {
+        alert('密码错误！');
+    }
+});
+
+// 下载Excel模板
+document.getElementById('downloadTemplate').addEventListener('click', function() {
+    // 创建Excel模板数据
+    const templateData = [
+        {
+            '风格名称': '现代简约风',
+            '核心理念': '形式追随功能，少即是多',
+            '风格特点': '线条简洁、色彩素雅（黑、白、灰）、功能至上、空间开放',
+            '开创/关键人物与流行背景': '路德维希·密斯·凡德罗（提出"少即是多"）；源于20世纪初的现代主义运动',
+            '代表性作品/元素': '巴塞罗那德国馆、范斯沃斯住宅',
+            '详细描述': '现代简约风的核心是"形式追随功能"与"少即是多"。它摒弃一切冗余装饰，强调空间的开放性与功能性，运用简洁利落的线条与中性素雅的色调（如黑、白、灰），营造出理性、通透且宁静的氛围。其开创者是德国建筑大师路德维希·密斯·凡德罗，他的经典作品巴塞罗那德国馆和范斯沃斯住宅，完美诠释了流动空间与极致简约的美学理念。',
+            '图片URL': 'https://example.com/image1.jpg,https://example.com/image2.jpg'
+        }
+    ];
+    
+    // 创建工作簿
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(templateData);
+    
+    // 将工作表添加到工作簿
+    XLSX.utils.book_append_sheet(wb, ws, '设计风格模板');
+    
+    // 生成Excel文件并下载
+    XLSX.writeFile(wb, '设计风格数据模板.xlsx');
+});
+
+// 上传Excel文件
+document.getElementById('excelFile').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, {type: 'array'});
+            
+            // 获取第一个工作表
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            
+            // 将工作表转换为JSON
+            const jsonData = XLSX.utils.sheet_to_json(worksheet);
+            
+            // 处理并保存数据
+            processExcelData(jsonData);
+        } catch (error) {
+            console.error('解析Excel文件失败:', error);
+            document.getElementById('uploadStatus').innerHTML = '<p style="color: red;">解析Excel文件失败，请检查文件格式</p>';
+        }
+    };
+    reader.readAsArrayBuffer(file);
+});
+
+// 处理Excel数据并保存到LeanCloud - 修改版本
+function processExcelData(data) {
+    let successCount = 0;
+    let errorCount = 0;
+    let processedCount = 0;
+    
+    document.getElementById('uploadStatus').innerHTML = '<p>正在上传数据，请稍候...</p>';
+    
+    // 分批处理数据，每批5条，每批之间延迟1秒
+    const batchSize = 5;
+    const delayBetweenBatches = 1000; // 1秒
+    
+    function processBatch(startIndex) {
+        const endIndex = Math.min(startIndex + batchSize, data.length);
+        const batch = data.slice(startIndex, endIndex);
+        
+        let batchPromises = batch.map((item, index) => {
+            return new Promise((resolve) => {
+                // 为每个请求添加延迟，避免同时发送太多请求
+                setTimeout(() => {
+                    const styleName = item['风格名称'];
+                    const coreConcept = item['核心理念'];
+                    const styleFeatures = item['风格特点'];
+                    const keyFigures = item['开创/关键人物与流行背景'];
+                    const representativeWorks = item['代表性作品/元素'];
+                    const description = item['详细描述'];
+                    const images = item['图片URL'] ? item['图片URL'].split(',').map(url => url.trim()) : [];
+                    
+                    // 查询是否已存在该风格
+                    const query = new AV.Query('DesignStyle');
+                    query.equalTo('styleName', styleName);
+                    query.first().then((existingStyle) => {
+                        let style;
+                        
+                        if (existingStyle) {
+                            // 更新现有风格
+                            style = existingStyle;
+                        } else {
+                            // 创建新风格
+                            const DesignStyle = AV.Object.extend('DesignStyle');
+                            style = new DesignStyle();
+                        }
+                        
+                        // 设置属性
+                        style.set('styleName', styleName);
+                        style.set('coreConcept', coreConcept);
+                        style.set('styleFeatures', styleFeatures);
+                        style.set('keyFigures', keyFigures);
+                        style.set('representativeWorks', representativeWorks);
+                        style.set('description', description);
+                        style.set('images', images);
+                        
+                        // 保存到LeanCloud
+                        return style.save();
+                    }).then(() => {
+                        successCount++;
+                        processedCount++;
+                        resolve(true);
+                    }).catch(error => {
+                        console.error('保存风格数据失败:', error);
+                        errorCount++;
+                        processedCount++;
+                        resolve(false);
+                    });
+                }, index * 200); // 每个请求间隔200毫秒
+            });
+        });
+        
+        // 等待当前批次的所有请求完成
+        Promise.all(batchPromises).then(() => {
+            // 更新上传状态
+            updateUploadStatus(successCount, errorCount, data.length);
+            
+            // 如果还有数据，处理下一批
+            if (endIndex < data.length) {
+                setTimeout(() => {
+                    processBatch(endIndex);
+                }, delayBetweenBatches);
+            } else {
+                // 所有数据处理完成
+                document.getElementById('uploadStatus').innerHTML += '<p style="color: green;">所有数据处理完成！</p>';
+            }
+        });
+    }
+    
+    // 开始处理第一批数据
+    processBatch(0);
+}
+
+// 更新上传状态
+function updateUploadStatus(success, error, total) {
+    const statusElement = document.getElementById('uploadStatus');
+    
+    if (success + error === total) {
+        statusElement.innerHTML = `
+            <p>上传完成！</p>
+            <p>成功: ${success} 条，失败: ${error} 条</p>
+        `;
+        
+        if (error === 0) {
+            statusElement.innerHTML += '<p style="color: green;">所有数据已成功保存！</p>';
+        } else {
+            statusElement.innerHTML += '<p style="color: orange;">部分数据保存失败，请检查数据格式</p>';
+        }
+    } else {
+        statusElement.innerHTML = `
+            <p>正在上传... ${success + error}/${total}</p>
+            <p>成功: ${success} 条，失败: ${error} 条</p>
+        `;
+    }
+}
+
+// 手动保存风格数据
+document.getElementById('saveStyleBtn').addEventListener('click', function() {
+    const styleName = document.getElementById('styleNameInput').value;
+    const coreConcept = document.getElementById('styleConceptInput').value;
+    const styleFeatures = document.getElementById('styleFeaturesInput').value;
+    const keyFigures = document.getElementById('styleKeyFiguresInput').value;
+    const representativeWorks = document.getElementById('styleRepresentativeInput').value;
+    const description = document.getElementById('styleDescriptionInput').value;
+    const imagesInput = document.getElementById('styleImagesInput').value;
+    const images = imagesInput ? imagesInput.split(',').map(url => url.trim()) : [];
+    
+    if (!styleName) {
+        alert('请输入风格名称！');
+        return;
+    }
+    
+    // 查询是否已存在该风格
+    const query = new AV.Query('DesignStyle');
+    query.equalTo('styleName', styleName);
+    query.first().then((existingStyle) => {
+        let style;
+        
+        if (existingStyle) {
+            // 更新现有风格
+            style = existingStyle;
+        } else {
+            // 创建新风格
+            const DesignStyle = AV.Object.extend('DesignStyle');
+            style = new DesignStyle();
+        }
+        
+        // 设置属性
+        style.set('styleName', styleName);
+        style.set('coreConcept', coreConcept);
+        style.set('styleFeatures', styleFeatures);
+        style.set('keyFigures', keyFigures);
+        style.set('representativeWorks', representativeWorks);
+        style.set('description', description);
+        style.set('images', images);
+        
+        // 保存到LeanCloud
+        return style.save();
+    }).then(() => {
+        alert('风格数据保存成功！');
+        document.getElementById('clearFormBtn').click();
+    }).catch(error => {
+        console.error('保存风格数据失败:', error);
+        alert('保存失败，请稍后重试。');
+    });
+});
+
+// 清空表单
+document.getElementById('clearFormBtn').addEventListener('click', function() {
+    document.getElementById('styleNameInput').value = '';
+    document.getElementById('styleConceptInput').value = '';
+    document.getElementById('styleFeaturesInput').value = '';
+    document.getElementById('styleKeyFiguresInput').value = '';
+    document.getElementById('styleRepresentativeInput').value = '';
+    document.getElementById('styleDescriptionInput').value = '';
+    document.getElementById('styleImagesInput').value = '';
+});
+
+// 保存图片URL到LeanCloud
+document.getElementById('saveImageUrls').addEventListener('click', function() {
+    const heroImageUrl = document.getElementById('heroImageUrl').value;
+    const aboutImageUrl = document.getElementById('aboutImageUrl').value;
+    const wrightImageUrl = document.getElementById('wrightImageUrl').value;
+    const liangImageUrl = document.getElementById('liangImageUrl').value;
+    const clubImageUrl = document.getElementById('clubImageUrl').value;
+    
+    const query = new AV.Query('SiteImages');
+    query.first().then((imageSettings) => {
+        if (!imageSettings) {
+            imageSettings = new AV.Object('SiteImages');
+        }
+        
+        imageSettings.set('heroImageUrl', heroImageUrl);
+        imageSettings.set('aboutImageUrl', aboutImageUrl);
+        imageSettings.set('wrightImageUrl', wrightImageUrl);
+        imageSettings.set('liangImageUrl', liangImageUrl);
+        imageSettings.set('clubImageUrl', clubImageUrl);
+        
+        return imageSettings.save();
+    }).then(() => {
+        alert('图片URL保存成功！');
+        
+        // 立即更新页面上的图片
+        if (heroImageUrl) {
+            updateImageWithCacheBusting('hero-bg-image', heroImageUrl);
+            updateImageWithCacheBusting('heroPreview', heroImageUrl);
+            document.getElementById('heroPreview').classList.add('active');
+        }
+        
+        if (aboutImageUrl) {
+            updateImageWithCacheBusting('about-image', aboutImageUrl);
+            updateImageWithCacheBusting('aboutPreview', aboutImageUrl);
+            document.getElementById('aboutPreview').classList.add('active');
+        }
+        
+        if (wrightImageUrl) {
+            updateImageWithCacheBusting('wright-image', wrightImageUrl);
+            updateImageWithCacheBusting('wrightPreview', wrightImageUrl);
+            document.getElementById('wrightPreview').classList.add('active');
+        }
+        
+        if (liangImageUrl) {
+            updateImageWithCacheBusting('liang-image', liangImageUrl);
+            updateImageWithCacheBusting('liangPreview', liangImageUrl);
+            document.getElementById('liangPreview').classList.add('active');
+        }
+        
+        if (clubImageUrl) {
+            updateImageWithCacheBusting('club-image', clubImageUrl);
+            updateImageWithCacheBusting('clubPreview', clubImageUrl);
+            document.getElementById('clubPreview').classList.add('active');
+        }
+        
+    }).catch(error => {
+        console.error('保存图片URL失败:', error);
+        alert('保存失败，请稍后重试。');
+    });
+});
+    </script>
+</body>
+</html>
