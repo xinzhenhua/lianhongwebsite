@@ -3,57 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>连宏整装 | YANVUE颜屿 - 西安最受信任的整装全案服务商</title>
-    <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.12.0/dist/av-min.js"></script>
+    <title>连宏整装 | 通往财富圈层的钥匙</title>
+    <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.13.2/dist/av-min.js"></script>
     <style>
         :root {
-            --primary-black: #000000;
-            --secondary-black: #1a1a1a;
-            --dark-gray: #2d2d2d;
-            --medium-gray: #555555;
-            --light-gray: #888888;
-            --lighter-gray: #e0e0e0;
-            --primary-white: #ffffff;
-            --accent-color: #f5f5f5;
+            --primary-color: #ffffff;
+            --bg-color: #000000;
+            --accent-color: #c9a96e;
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
         
         body {
-            background-color: var(--primary-white);
-            color: var(--primary-black);
-            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
             overflow-x: hidden;
+            line-height: 1.6;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
         
         /* 导航栏 */
-        .navbar {
+        nav {
             position: fixed;
             top: 0;
-            left: 0;
             width: 100%;
-            background-color: var(--primary-white);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 30px 0;
             z-index: 1000;
-            padding: 15px 0;
-            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
         }
         
-        .navbar.scrolled {
-            padding: 10px 0;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+        nav.scrolled {
+            padding: 15px 0;
+            background: rgba(0, 0, 0, 0.95);
         }
         
         .nav-container {
@@ -63,605 +57,579 @@
         }
         
         .logo {
-            display: flex;
-            align-items: center;
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 3px;
         }
         
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
-        
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-black);
-        }
-        
-        .nav-menu {
+        .nav-links {
             display: flex;
             list-style: none;
         }
         
-        .nav-item {
-            margin-left: 30px;
+        .nav-links li {
+            margin-left: 40px;
         }
         
-        .nav-link {
-            color: var(--primary-black);
+        .nav-links a {
+            color: var(--primary-color);
             text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: color 0.3s ease;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: var(--transition);
             position: relative;
         }
         
-        .nav-link:hover {
-            color: var(--medium-gray);
-        }
-        
-        .nav-link::after {
+        .nav-links a:after {
             content: '';
             position: absolute;
             bottom: -5px;
             left: 0;
             width: 0;
-            height: 2px;
-            background-color: var(--primary-black);
-            transition: width 0.3s ease;
+            height: 1px;
+            background: var(--accent-color);
+            transition: var(--transition);
         }
         
-        .nav-link:hover::after {
+        .nav-links a:hover:after {
             width: 100%;
         }
         
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--primary-black);
-        }
-        
-        .admin-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            z-index: 1000;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-        
-        .admin-btn:hover {
-            background-color: var(--dark-gray);
-        }
-        
-        /* Hero区域 */
-        .hero-section {
+        /* 英雄区域 */
+        .hero {
             height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
-            background-color: var(--accent-color);
             overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65));
+            z-index: -1;
+        }
+        
+        .hero-bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
         }
         
         .hero-content {
-            max-width: 600px;
-            z-index: 2;
-            padding: 0 20px;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1.5s ease forwards 0.5s;
         }
         
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.2rem;
-            color: var(--medium-gray);
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            line-height: 1.1;
             margin-bottom: 30px;
-            max-width: 500px;
+            letter-spacing: 2px;
         }
         
-        .hero-btns {
-            display: flex;
-            gap: 15px;
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+            max-width: 600px;
         }
         
         .btn {
-            padding: 14px 30px;
-            border-radius: 4px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.3s ease;
             display: inline-block;
-            cursor: pointer;
-            border: none;
-            font-size: 1rem;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--dark-gray);
-        }
-        
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--primary-black);
-            border: 1px solid var(--primary-black);
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-        }
-        
-        .hero-image {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50%;
-            height: 80%;
-            background-color: var(--lighter-gray);
-            border-radius: 10px 0 0 10px;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            position: relative;
             overflow: hidden;
-            z-index: 1;
+            cursor: pointer;
         }
         
-        .hero-image img {
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            background: var(--accent-color);
+            transition: var(--transition);
+            z-index: -1;
         }
         
-        /* 核心优势 */
-        .advantages-section {
-            padding: 100px 0;
-            background-color: var(--primary-white);
+        .btn:hover {
+            color: var(--bg-color);
+            border-color: var(--accent-color);
         }
         
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-            font-size: 2.5rem;
-            font-weight: 700;
+        .btn:hover:before {
+            left: 0;
         }
         
-        .section-subtitle {
-            text-align: center;
-            margin-bottom: 60px;
-            font-size: 1.2rem;
-            color: var(--medium-gray);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .advantages-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-        
-        .advantage-card {
-            background-color: var(--primary-white);
-            padding: 40px 30px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .advantage-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .advantage-icon {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: var(--primary-black);
-        }
-        
-        .advantage-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-        
-        .advantage-desc {
-            color: var(--medium-gray);
-            line-height: 1.6;
-        }
-        
-        /* 服务模式 */
-        .services-section {
-            padding: 100px 0;
-            background-color: var(--accent-color);
-        }
-        
-        .services-tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 50px;
-            border-bottom: 1px solid var(--lighter-gray);
-        }
-        
-        .service-tab {
-            padding: 15px 30px;
-            background: none;
-            border: none;
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--medium-gray);
-            cursor: pointer;
-            transition: all 0.3s ease;
+        /* 关于区域 */
+        .about {
+            padding: 150px 0;
             position: relative;
         }
         
-        .service-tab.active {
-            color: var(--primary-black);
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 80px;
+            letter-spacing: 3px;
+            position: relative;
+            display: inline-block;
         }
         
-        .service-tab.active::after {
+        .section-title:after {
             content: '';
             position: absolute;
-            bottom: -1px;
+            bottom: -15px;
             left: 0;
-            width: 100%;
-            height: 3px;
-            background-color: var(--primary-black);
-        }
-        
-        .service-content {
-            display: none;
-        }
-        
-        .service-content.active {
-            display: block;
-        }
-        
-        .service-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-        
-        .service-image {
-            border-radius: 8px;
-            overflow: hidden;
-            height: 400px;
-        }
-        
-        .service-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .service-text h3 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-        
-        .service-text p {
-            margin-bottom: 20px;
-            color: var(--medium-gray);
-            line-height: 1.7;
-        }
-        
-        .service-features {
-            list-style: none;
-            margin-top: 30px;
-        }
-        
-        .service-features li {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: flex-start;
-        }
-        
-        .service-features li::before {
-            content: '✓';
-            margin-right: 10px;
-            color: var(--primary-black);
-            font-weight: bold;
-        }
-        
-        /* 案例展示 */
-        .cases-section {
-            padding: 100px 0;
-            background-color: var(--primary-white);
-        }
-        
-        .cases-filter {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .filter-btn {
-            padding: 8px 20px;
-            background: none;
-            border: 1px solid var(--lighter-gray);
-            border-radius: 30px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .filter-btn.active, .filter-btn:hover {
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-            border-color: var(--primary-black);
-        }
-        
-        .cases-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-        
-        .case-card {
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .case-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .case-image {
-            height: 250px;
-            overflow: hidden;
-        }
-        
-        .case-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .case-card:hover .case-image img {
-            transform: scale(1.05);
-        }
-        
-        .case-info {
-            padding: 20px;
-        }
-        
-        .case-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        
-        .case-meta {
-            display: flex;
-            color: var(--light-gray);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-        
-        .case-meta span {
-            margin-right: 15px;
-        }
-        
-        .case-desc {
-            color: var(--medium-gray);
-            line-height: 1.5;
-        }
-        
-        .view-all-btn {
-            text-align: center;
-            margin-top: 50px;
-        }
-        
-        /* 精工工艺 */
-        .craftsmanship-section {
-            padding: 100px 0;
-            background-color: var(--accent-color);
-        }
-        
-        .process-tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .process-tab {
-            padding: 12px 25px;
-            background: none;
-            border: 1px solid var(--lighter-gray);
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .process-tab.active, .process-tab:hover {
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-            border-color: var(--primary-black);
-        }
-        
-        .process-content {
-            display: none;
-        }
-        
-        .process-content.active {
-            display: block;
-        }
-        
-        .process-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-            font-size: 0.9rem;
-        }
-        
-        .process-table th, .process-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--lighter-gray);
-        }
-        
-        .process-table th {
-            background-color: var(--primary-white);
-            font-weight: 600;
-        }
-        
-        .process-table tr:hover {
-            background-color: rgba(0, 0, 0, 0.02);
-        }
-        
-        /* 关于我们 */
-        .about-section {
-            padding: 100px 0;
-            background-color: var(--primary-white);
+            width: 60px;
+            height: 1px;
+            background: var(--accent-color);
         }
         
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: 80px;
             align-items: center;
         }
         
+        .about-text p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
         .about-image {
-            border-radius: 8px;
-            overflow: hidden;
+            position: relative;
             height: 500px;
+            overflow: hidden;
+            background: #000;
         }
         
         .about-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: var(--transition);
         }
         
-        .about-text h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+        .about-image:hover img {
+            transform: scale(1.05);
         }
         
-        .about-text p {
+        /* 致敬先驱区域 */
+        .pioneers {
+            padding: 150px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        .pioneers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+        
+        .pioneer-card {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .pioneer-image {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            background: #000;
+            margin-bottom: 30px;
+        }
+        
+        .pioneer-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .pioneer-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .pioneer-content h3 {
+            font-size: 1.8rem;
             margin-bottom: 20px;
-            color: var(--medium-gray);
+            font-weight: 400;
+            color: var(--accent-color);
+        }
+        
+        .pioneer-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
             line-height: 1.7;
         }
         
-        .milestones {
+        /* 服务区域 */
+        .services {
+            padding: 150px 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+        
+        .service-card {
+            padding: 50px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(201, 169, 110, 0.05);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .service-card:hover:before {
+            left: 0;
+        }
+        
+        .service-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: var(--accent-color);
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        
+        .service-card p {
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .service-price {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        
+        .service-note {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 25px;
+        }
+        
+        /* 设计风格区域 */
+        .styles {
+            padding: 150px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        
+        .styles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .style-card {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .style-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(201, 169, 110, 0.1);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .style-card:hover:before {
+            left: 0;
+        }
+        
+        .style-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .style-card h4 {
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        /* 俱乐部区域 */
+        .club {
+            padding: 150px 0;
+        }
+        
+        .club-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        
+        .club-text p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .club-benefits {
+            list-style: none;
             margin-top: 40px;
         }
         
-        .milestone {
-            margin-bottom: 30px;
-            padding-left: 20px;
-            border-left: 3px solid var(--primary-black);
+        .club-benefits li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
         }
         
-        .milestone-year {
-            font-weight: 600;
+        .club-benefits li:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+        
+        .club-image {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        .club-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        /* CTA区域 */
+        .cta {
+            padding: 150px 0;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 50px;
             font-size: 1.2rem;
-            margin-bottom: 5px;
         }
         
-        .milestone-desc {
-            color: var(--medium-gray);
-        }
-        
-        /* 联系我们 */
-        .contact-section {
-            padding: 100px 0;
-            background-color: var(--accent-color);
-        }
-        
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-        }
-        
-        .contact-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-        
-        .contact-details {
-            margin-bottom: 30px;
-        }
-        
-        .contact-item {
+        .btn-group {
             display: flex;
-            align-items: flex-start;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .btn-accent {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            border-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background: transparent;
+            color: var(--accent-color);
+        }
+        
+        /* 页脚 */
+        footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+        
+        .footer-about p {
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer-links h4, .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
             margin-bottom: 15px;
         }
         
-        .contact-icon {
-            margin-right: 15px;
-            font-size: 1.2rem;
-            color: var(--primary-black);
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
         }
         
-        .social-links {
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        /* 动画 */
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 管理员面板 */
+        .admin-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+        
+        .admin-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-color);
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .social-link {
-            display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-            border-radius: 50%;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            transition: var(--transition);
         }
         
-        .social-link:hover {
-            background-color: var(--dark-gray);
-            transform: translateY(-3px);
+        .admin-btn:hover {
+            transform: scale(1.1);
         }
         
-        .contact-form {
-            background-color: var(--primary-white);
+        .admin-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1002;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .admin-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .admin-form {
+            background: #111;
             padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .admin-form h3 {
+            margin-bottom: 30px;
+            font-weight: 400;
+            letter-spacing: 1px;
         }
         
         .form-group {
@@ -671,2068 +639,823 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 500;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
         }
         
-        .form-control {
+        .size-hint {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 5px;
+        }
+        
+        .form-group input, .form-group select {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid var(--lighter-gray);
-            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary-color);
             font-size: 1rem;
-            transition: border-color 0.3s ease;
         }
         
-        .form-control:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
-            border-color: var(--primary-black);
+            border-color: var(--accent-color);
         }
         
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        /* 页脚 */
-        footer {
-            background-color: var(--secondary-black);
-            color: var(--primary-white);
-            padding: 60px 0 30px;
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        .footer-desc {
-            color: var(--light-gray);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        
-        .footer-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        
-        .footer-links {
-            list-style: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: var(--light-gray);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary-white);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid var(--dark-gray);
-            color: var(--light-gray);
-            font-size: 0.9rem;
-        }
-        
-        /* 模态框 */
-        .modal {
+        .upload-section {
             display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .upload-section.active {
+            display: block;
+        }
+        
+        .image-preview {
+            margin-top: 10px;
+            max-width: 100%;
+            max-height: 200px;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .image-preview.active {
+            display: block;
+        }
+        
+        /* 加入俱乐部模态框 */
+        .club-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            justify-content: center;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
+            z-index: 1003;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
         }
         
-        .modal-content {
-            background-color: var(--primary-white);
-            border-radius: 8px;
-            width: 100%;
+        .club-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .club-form {
+            background: #111;
+            padding: 40px;
+            width: 90%;
             max-width: 500px;
-            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             max-height: 90vh;
             overflow-y: auto;
         }
         
-        .modal-header {
-            padding: 20px 30px;
-            border-bottom: 1px solid var(--lighter-gray);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-        
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--medium-gray);
-            transition: color 0.3s ease;
-        }
-        
-        .close-modal:hover {
-            color: var(--primary-black);
-        }
-        
-        .modal-body {
-            padding: 30px;
-        }
-        
-        /* 管理员区域 */
-        .admin-section {
-            display: none;
-            padding: 40px 0;
-        }
-        
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .club-form h3 {
             margin-bottom: 30px;
+            font-weight: 400;
+            letter-spacing: 1px;
         }
         
-        .tab-container {
-            margin-top: 20px;
-        }
-        
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--lighter-gray);
-            margin-bottom: 20px;
-            overflow-x: auto;
-        }
-        
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-        }
-        
-        .tab.active {
-            border-bottom: 2px solid var(--primary-black);
-            color: var(--primary-black);
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .admin-table th, .admin-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--lighter-gray);
-        }
-        
-        .admin-table th {
-            background-color: var(--accent-color);
-            font-weight: 600;
-        }
-        
-        .admin-table input, .admin-table textarea, .admin-table select {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid var(--lighter-gray);
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-        
-        .admin-table textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        
-        .admin-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .admin-btn-small {
-            padding: 6px 12px;
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: background-color 0.3s ease;
-        }
-        
-        .admin-btn-small:hover {
-            background-color: var(--dark-gray);
-        }
-        
-        .admin-btn-small.delete {
-            background-color: #e74c3c;
-        }
-        
-        .admin-btn-small.delete:hover {
-            background-color: #c0392b;
-        }
-        
-        .add-btn {
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 20px;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
-        
-        .add-btn:hover {
-            background-color: var(--dark-gray);
-        }
-        
-        /* 图片上传样式 */
-        .image-upload-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .image-preview {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        
-        .image-preview img {
-            width: 100%;
-            height: auto;
-        }
-        
-        .upload-btn {
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: background-color 0.3s ease;
-        }
-        
-        .upload-btn:hover {
-            background-color: var(--dark-gray);
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
         
         /* 响应式设计 */
         @media (max-width: 992px) {
-            .advantages-grid, .cases-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .service-details, .about-content, .contact-content {
+            .about-content, .club-content, .pioneers-grid {
                 grid-template-columns: 1fr;
             }
             
-            .footer-content {
-                grid-template-columns: 1fr 1fr;
+            .services-grid {
+                grid-template-columns: 1fr;
             }
             
-            .hero-title {
-                font-size: 2.8rem;
+            .styles-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
             }
         }
         
         @media (max-width: 768px) {
-            .nav-menu {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                height: calc(100vh - 70px);
-                background-color: var(--primary-white);
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                padding-top: 50px;
-                transition: left 0.3s ease;
-            }
-            
-            .nav-menu.active {
-                left: 0;
-            }
-            
-            .nav-item {
-                margin: 0 0 30px 0;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .hero-section {
-                height: 80vh;
-            }
-            
-            .hero-content {
-                text-align: center;
-                max-width: 100%;
-            }
-            
-            .hero-image {
+            .nav-links {
                 display: none;
             }
             
-            .advantages-grid, .cases-grid {
-                grid-template-columns: 1fr;
+            .hero h1 {
+                font-size: 2.5rem;
             }
             
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .hero-title {
-                font-size: 2.2rem;
-            }
-            
-            .hero-btns {
+            .btn-group {
                 flex-direction: column;
-                gap: 10px;
+                align-items: center;
             }
             
             .btn {
                 width: 100%;
+                max-width: 300px;
                 text-align: center;
             }
             
-            .services-tabs {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .service-tab {
-                width: 100%;
-                text-align: center;
-            }
-            
-            .process-table {
-                display: block;
-                overflow-x: auto;
+            .styles-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
         }
     </style>
 </head>
 <body>
-    <!-- 管理员按钮 -->
-    <button class="admin-btn" id="adminBtn">设置</button>
-    
     <!-- 导航栏 -->
-    <nav class="navbar" id="navbar">
+    <nav id="navbar">
         <div class="container nav-container">
-            <div class="logo">
-                <div class="logo-text">连宏整装</div>
-            </div>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                ☰
-            </button>
-            
-            <ul class="nav-menu" id="navMenu">
-                <li class="nav-item"><a href="#home" class="nav-link">首页</a></li>
-                <li class="nav-item"><a href="#about" class="nav-link">关于我们</a></li>
-                <li class="nav-item"><a href="#services" class="nav-link">服务模式</a></li>
-                <li class="nav-item"><a href="#cases" class="nav-link">案例展示</a></li>
-                <li class="nav-item"><a href="#craftsmanship" class="nav-link">精工工艺</a></li>
-                <li class="nav-item"><a href="#contact" class="nav-link">联系我们</a></li>
+            <div class="logo">连宏整装</div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我们</a></li>
+                <li><a href="#pioneers">致敬先驱</a></li>
+                <li><a href="#services">服务方案</a></li>
+                <li><a href="#styles">设计风格</a></li>
+                <li><a href="#club">精英俱乐部</a></li>
+                <li><a href="#contact">联系我们</a></li>
             </ul>
         </div>
     </nav>
-    
-    <!-- 首页Hero区域 -->
-    <section class="hero-section" id="home">
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <img src="" alt="主页背景" id="hero-bg-image" class="hero-bg-image">
         <div class="container">
             <div class="hero-content">
-                <h1 class="hero-title">连宏整装 · 颜屿设计</h1>
-                <p class="hero-subtitle">法蕴美学 · 精工筑家。以设计赋能生活，用时光检验品质，为客户创造颜值与实用兼具的居住空间。</p>
-                <div class="hero-btns">
-                    <a href="#contact" class="btn btn-primary">免费获取报价</a>
-                    <a href="#cases" class="btn btn-secondary">查看案例</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <!-- 图片将通过JS动态加载 -->
+                <h1>您的新家，应是通往下一个财富圈层的钥匙</h1>
+                <p>连宏整装，为西安进阶者打造的「财富社交资产」。我们不仅提供卓越的装修服务，更为您开启通往精英圈层的大门。</p>
+                <a href="https://xinzhenhua.github.io/pricing/" class="btn" target="_blank">获取专属报价</a>
             </div>
         </div>
     </section>
-    
-    <!-- 核心优势 -->
-    <section class="advantages-section">
+
+    <!-- 关于区域 -->
+    <section class="about" id="about">
         <div class="container">
-            <h2 class="section-title">为什么选择颜屿？</h2>
-            <p class="section-subtitle">我们以诚实守信、口碑第一、服务至上、精益求精为核心价值，为您提供透明、省心、高品质的装修体验</p>
-            
-            <div class="advantages-grid">
-                <div class="advantage-card">
-                    <div class="advantage-icon">💰</div>
-                    <h3 class="advantage-title">价格透明</h3>
-                    <p class="advantage-desc">0增项合约，材料溯源透明，预算=决算，让装修回归透明</p>
-                </div>
-                
-                <div class="advantage-card">
-                    <div class="advantage-icon">👑</div>
-                    <h3 class="advantage-title">品质保障</h3>
-                    <p class="advantage-desc">德系工艺标准，毫米级验收，48道品控节点，用时光检验品质</p>
-                </div>
-                
-                <div class="advantage-card">
-                    <div class="advantage-icon">💎</div>
-                    <h3 class="advantage-title">设计领先</h3>
-                    <p class="advantage-desc">YANVUE颜屿设计，融合法式景观思维与本土生活智慧，让功能与艺术共生</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 服务模式 -->
-    <section class="services-section" id="services">
-        <div class="container">
-            <h2 class="section-title">服务模式</h2>
-            <p class="section-subtitle">我们提供整装、全案和半包三种服务模式，满足不同客户的需求</p>
-            
-            <div class="services-tabs">
-                <button class="service-tab active" data-service="full">整装服务</button>
-                <button class="service-tab" data-service="complete">全案设计</button>
-                <button class="service-tab" data-service="semi">半包服务</button>
-            </div>
-            
-            <div class="service-content active" id="full-service">
-                <div class="service-details">
-                    <div class="service-image">
-                        <!-- 图片将通过JS动态加载 -->
-                    </div>
-                    <div class="service-text">
-                        <h3>整装服务</h3>
-                        <p>从设计到施工，从主材到软装，我们提供一站式整体解决方案。您只需拎包入住，享受高品质的居住体验。</p>
-                        <p>我们精选一线品牌材料，采用德系工艺标准，确保每一个细节都达到精工品质。</p>
-                        
-                        <ul class="service-features">
-                            <li>一站式整体解决方案</li>
-                            <li>精选一线品牌材料</li>
-                            <li>德系工艺标准</li>
-                            <li>专业施工团队</li>
-                            <li>全程管家服务</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="service-content" id="complete-service">
-                <div class="service-details">
-                    <div class="service-image">
-                        <!-- 图片将通过JS动态加载 -->
-                    </div>
-                    <div class="service-text">
-                        <h3>全案设计</h3>
-                        <p>我们提供从概念设计到施工落地的全流程服务，包括空间规划、材料选配、软装搭配等，确保设计理念完美呈现。</p>
-                        <p>YANVUE颜屿设计团队将根据您的需求和生活习惯，打造专属的居住空间。</p>
-                        
-                        <ul class="service-features">
-                            <li>全流程设计服务</li>
-                            <li>个性化空间规划</li>
-                            <li>专业材料选配</li>
-                            <li>软装搭配指导</li>
-                            <li>施工跟进服务</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="service-content" id="semi-service">
-                <div class="service-details">
-                    <div class="service-image">
-                        <!-- 图片将通过JS动态加载 -->
-                    </div>
-                    <div class="service-text">
-                        <h3>半包服务</h3>
-                        <p>我们提供基础施工服务，包括水电改造、泥瓦工、木工、油漆等，您可自行选购主材，灵活控制预算。</p>
-                        <p>我们采用精工工艺标准，确保基础施工质量，为您的家居打下坚实基础。</p>
-                        
-                        <ul class="service-features">
-                            <li>基础施工服务</li>
-                            <li>精工工艺标准</li>
-                            <li>灵活控制预算</li>
-                            <li>专业施工指导</li>
-                            <li>质量保障体系</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 案例展示 -->
-    <section class="cases-section" id="cases">
-        <div class="container">
-            <h2 class="section-title">案例展示</h2>
-            <p class="section-subtitle">精选案例，呈现YANVUE颜屿设计的独特魅力</p>
-            
-            <div class="cases-filter">
-                <button class="filter-btn active" data-filter="all">全部</button>
-                <button class="filter-btn" data-filter="apartment">平层</button>
-                <button class="filter-btn" data-filter="duplex">复式</button>
-                <button class="filter-btn" data-filter="villa">别墅</button>
-                <button class="filter-btn" data-filter="modern">现代风格</button>
-                <button class="filter-btn" data-filter="minimalist">极简风格</button>
-            </div>
-            
-            <div class="cases-grid" id="casesGrid">
-                <!-- 案例将通过JS动态加载 -->
-            </div>
-            
-            <div class="view-all-btn">
-                <a href="#" class="btn btn-secondary">查看全部案例</a>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 精工工艺 -->
-    <section class="craftsmanship-section" id="craftsmanship">
-        <div class="container">
-            <h2 class="section-title">精工工艺</h2>
-            <p class="section-subtitle">连宏精工基础施工工艺标准，100多项验收节点，确保每一处细节都达到精工品质</p>
-            
-            <div class="process-tabs">
-                <button class="process-tab active" data-process="hydropower">水电工艺</button>
-                <button class="process-tab" data-process="carpentry">木工工艺</button>
-                <button class="process-tab" data-process="tiling">瓦工工艺</button>
-                <button class="process-tab" data-process="painting">油工工艺</button>
-            </div>
-            
-            <div class="process-content active" id="hydropower-process">
-                <table class="process-table">
-                    <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>验收项目</th>
-                            <th>工艺标准</th>
-                            <th>检测方法</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- 水电工艺内容将通过JS动态加载 -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="process-content" id="carpentry-process">
-                <table class="process-table">
-                    <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>验收项目</th>
-                            <th>工艺标准</th>
-                            <th>检测方法</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- 木工工艺内容将通过JS动态加载 -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="process-content" id="tiling-process">
-                <table class="process-table">
-                    <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>验收项目</th>
-                            <th>工艺标准</th>
-                            <th>检测方法</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- 瓦工工艺内容将通过JS动态加载 -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="process-content" id="painting-process">
-                <table class="process-table">
-                    <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>验收项目</th>
-                            <th>工艺标准</th>
-                            <th>检测方法</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- 油工工艺内容将通过JS动态加载 -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-    
-    <!-- 关于我们 -->
-    <section class="about-section" id="about">
-        <div class="container">
+            <h2 class="section-title">关于我们</h2>
             <div class="about-content">
-                <div class="about-image">
-                    <!-- 图片将通过JS动态加载 -->
-                </div>
                 <div class="about-text">
-                    <h2>关于连宏整装</h2>
-                    <p>YANVUE 颜屿整装，源自法语 VUE（景观）与东方美学"颜"的融合，寓意"将家雕琢为高颜值的舒适景观"。</p>
-                    <p>我们以精工标准重构居住体验，用设计让每一寸空间承载生活的诗意，让每一次归家都成为穿越风景的旅程。</p>
-                    
-                    <div class="milestones">
-                        <div class="milestone">
-                            <div class="milestone-year">2014</div>
-                            <div class="milestone-desc">西安连宏环保建材有限公司成立</div>
-                        </div>
-                        <div class="milestone">
-                            <div class="milestone-year">2017</div>
-                            <div class="milestone-desc">20亩智造基地，120+就业岗位</div>
-                        </div>
-                        <div class="milestone">
-                            <div class="milestone-year">2023</div>
-                            <div class="milestone-desc">陕西省A级纳税人</div>
-                        </div>
-                        <div class="milestone">
-                            <div class="milestone-year">2025</div>
-                            <div class="milestone-desc">成立连宏整装，建材→设计→装修一体化</div>
-                        </div>
-                    </div>
+                    <p>我是装修大司马，连宏整装的主理人。我的背景，或许是您信心的第一块基石：英国利兹大学商学院硕士、企业数字化转型专家、亿级跨境卖家 & 天使投资人。</p>
+                    <p>我做装修的初衷不是为了谋生，而是为了寻找"同路人"。我们是一群高知识分子、有底线、有信仰的长期主义者。对我们而言，装修的品质，是我们商业人格的体现，不容丝毫玷污。</p>
+                    <p>在连宏，我们深知传统的装修已让您精疲力尽。所以，我们决定成为这个行业的"规则重构者"。</p>
+                </div>
+                <div class="about-image">
+                    <img src="" alt="关于我们" id="about-image">
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- 联系我们 -->
-    <section class="contact-section" id="contact">
+
+    <!-- 致敬先驱区域 -->
+    <section class="pioneers" id="pioneers">
         <div class="container">
-            <h2 class="section-title">联系我们</h2>
-            <p class="section-subtitle">预约量房、设计咨询、装修报价，欢迎随时联系我们</p>
-            
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>联系信息</h3>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-icon">📍</div>
-                            <div>西安市莲湖区北关街道天乙大厦4楼</div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">📞</div>
-                            <div>13572145395</div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-icon">⏰</div>
-                            <div>周一至周日 9:00-18:00</div>
-                        </div>
+            <h2 class="section-title">致敬建筑先驱</h2>
+            <div class="pioneers-grid">
+                <div class="pioneer-card">
+                    <div class="pioneer-image">
+                        <img src="" alt="弗兰克·劳埃德·莱特" id="wright-image">
                     </div>
-                    
-                    <h3>关注我们</h3>
-                    <div class="social-links">
-                        <a href="#" class="social-link">抖</a>
-                        <a href="#" class="social-link">红</a>
-                        <a href="#" class="social-link">点</a>
+                    <div class="pioneer-content">
+                        <h3>弗兰克·劳埃德·莱特</h3>
+                        <p>美国最伟大的建筑师之一，有机建筑理论的创始人。他主张建筑应与自然环境和谐共存，创造"有机"的空间。</p>
+                        <p>莱特的设计理念强调水平线条、开放平面和与自然的融合，对现代建筑设计产生了深远影响。他的作品如落水山庄、古根海姆博物馆等，至今仍是建筑界的经典。</p>
+                        <p>对设计师的启发：莱特教会我们尊重场地环境，将建筑视为自然的一部分而非对立物。他的"有机建筑"理念鼓励我们在设计中追求形式与功能的完美统一。</p>
                     </div>
-                    <p style="margin-top: 15px; color: var(--medium-gray); font-size: 0.9rem;">
-                        抖音/小红书/大众点评搜索"连宏整装"<br>
-                        抖音搜索"装修大司马"
-                    </p>
                 </div>
-                
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">姓名</label>
-                            <input type="text" id="name" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">电话</label>
-                            <input type="tel" id="phone" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">留言</label>
-                            <textarea id="message" class="form-control" placeholder="请简要描述您的装修需求..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">提交咨询</button>
-                    </form>
+                <div class="pioneer-card">
+                    <div class="pioneer-image">
+                        <img src="" alt="梁思成" id="liang-image">
+                    </div>
+                    <div class="pioneer-content">
+                        <h3>梁思成</h3>
+                        <p>中国现代建筑学的奠基人，毕生致力于中国古建筑的研究与保护。他与妻子林徽因共同开创了中国建筑史学科。</p>
+                        <p>梁思成系统性地调查、记录和研究了中国古代建筑，尤其是唐宋时期的木构建筑，为后人留下了宝贵的学术遗产。他参与设计了人民英雄纪念碑和国徽。</p>
+                        <p>对设计师的启发：梁思成教导我们尊重传统与文脉，在创新中传承。他的工作提醒我们，优秀的设计应植根于文化土壤，同时面向未来。</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
+    <!-- 服务区域 -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">服务方案</h2>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">①</div>
+                    <h3>经济型</h3>
+                    <p>适用于年轻人第一套房，国标工艺标准+一线辅料+国标环保级别</p>
+                    <div class="service-price">¥121,361起</div>
+                    <div class="service-note">示例价格参考：100平建面 | 无主灯设计 | 含35平定制柜</div>
+                    <p>水电一口价 | 0增项承诺 | 5年质保</p>
+                    <a href="https://xinzhenhua.github.io/pricing/" class="btn" target="_blank">了解详情</a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">②</div>
+                    <h3>品质型</h3>
+                    <p>适用于改善型住房，精工工艺标准+进口辅料+欧标环保级别</p>
+                    <div class="service-price">¥164,697起</div>
+                    <div class="service-note">示例价格参考：100平建面 | 无主灯设计 | 含35平定制柜</div>
+                    <p>水电一口价 | 0增项承诺 | 20年质保 | 精英俱乐部资格</p>
+                    <a href="https://xinzhenhua.github.io/pricing/" class="btn" target="_blank">了解详情</a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon">③</div>
+                    <h3>豪华型</h3>
+                    <p>适用于顶豪大宅，精工工艺标准+顶级进口辅料+顶级环保</p>
+                    <div class="service-price">¥301,712起</div>
+                    <div class="service-note">示例价格参考：100平建面 | 无主灯设计 | 含35平定制柜</div>
+                    <p>水电一口价 | 0增项承诺 | 终身质保 | 亿级俱乐部资格</p>
+                    <a href="https://xinzhenhua.github.io/pricing/" class="btn" target="_blank">了解详情</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 设计风格区域 -->
+    <section class="styles" id="styles">
+        <div class="container">
+            <h2 class="section-title">设计风格解读</h2>
+            <div class="styles-grid">
+                <div class="style-card">
+                    <h4>奶油风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>原木风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>现代简约风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>中古风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>美式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>日式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>极简风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>极简原木风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>奶油原木风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>侘寂风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>意式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>包豪斯风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>法式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>轻法式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>欧式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>北欧风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>地中海风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>宋式风格</h4>
+                </div>
+                <div class="style-card">
+                    <h4>中式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>新中式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>乡村田园风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>工业风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>复古风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>南洋复古风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>轻奢风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>东南亚风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>台式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>后现代风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>巴洛克风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>洛可可风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>古典风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>新古典主义风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>现代美式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>简约欧式风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>波西米亚风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>摩洛哥风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>多巴胺风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>美拉德风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>老钱风</h4>
+                </div>
+                <div class="style-card">
+                    <h4>折衷主义风</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 俱乐部区域 -->
+    <section class="club" id="club">
+        <div class="container">
+            <h2 class="section-title">精英俱乐部</h2>
+            <div class="club-content">
+                <div class="club-text">
+                    <p>选择品质型或豪华型服务，您将自动获得加入"连宏高净值俱乐部"的资格。在这里，装修只是我们结识的契机。</p>
+                    <p>我们的终极目标：帮助俱乐部成员，把现有财富扩大10倍。</p>
+                    <ul class="club-benefits">
+                        <li>成为品牌合伙人，享受转介绍报酬与项目分红</li>
+                        <li>受邀参加年度高净值圆桌会议</li>
+                        <li>与西安千万级老板们互换资源，抱团发展</li>
+                        <li>共同投资，一起收益，实现真正的向上社交</li>
+                    </ul>
+                </div>
+                <div class="club-image">
+                    <img src="" alt="精英俱乐部" id="club-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA区域 -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>开启您的圈层之旅</h2>
+            <p>您为财富奋斗了这么多年，您的居所，不应只是材料的堆砌，它理应是您社会身份与未来机遇的体现。</p>
+            <div class="btn-group">
+                <a href="https://xinzhenhua.github.io/pricing/" class="btn btn-accent" target="_blank">获取精准报价</a>
+                <a href="#join-club" class="btn" id="joinClubBtn">加入精英圈层</a>
+            </div>
+        </div>
+    </section>
+
     <!-- 页脚 -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-about">
                     <div class="footer-logo">连宏整装</div>
-                    <p class="footer-desc">YANVUE 颜屿整装 | 法蕴美学 · 精工筑家。以设计赋能生活，用时光检验品质，为客户创造颜值与实用兼具的居住空间。</p>
+                    <p>连宏整装，致敬每一个认真生活的你。我们不仅装修房屋，更为您构筑通往更高圈层的桥梁。</p>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-title">快速链接</h3>
-                    <ul class="footer-links">
+                <div class="footer-links">
+                    <h4>快速链接</h4>
+                    <ul>
                         <li><a href="#home">首页</a></li>
                         <li><a href="#about">关于我们</a></li>
-                        <li><a href="#services">服务模式</a></li>
-                        <li><a href="#cases">案例展示</a></li>
+                        <li><a href="#pioneers">致敬先驱</a></li>
+                        <li><a href="#services">服务方案</a></li>
+                        <li><a href="#styles">设计风格</a></li>
+                        <li><a href="#club">精英俱乐部</a></li>
                     </ul>
                 </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-title">服务项目</h3>
-                    <ul class="footer-links">
-                        <li><a href="#services">整装服务</a></li>
-                        <li><a href="#services">全案设计</a></li>
-                        <li><a href="#services">半包服务</a></li>
-                        <li><a href="#craftsmanship">精工工艺</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-links-container">
-                    <h3 class="footer-title">联系我们</h3>
-                    <ul class="footer-links">
-                        <li><a href="#contact">预约量房</a></li>
-                        <li><a href="#contact">设计咨询</a></li>
-                        <li><a href="#contact">装修报价</a></li>
-                        <li><a href="#contact">公司地址</a></li>
-                    </ul>
+                <div class="footer-contact">
+                    <h4>联系我们</h4>
+                    <p>地址：西安市中心莲湖区天乙大厦4楼</p>
+                    <p>电话：13572145395</p>
+                    <p>邮箱：tedsin@qq.com</p>
                 </div>
             </div>
-            
             <div class="footer-bottom">
-                <p>© 2025 连宏整装 | YANVUE颜屿设计 - 西安最受信任的整装全案服务商</p>
+                <p>&copy; 2025 连宏整装. 版权所有.</p>
             </div>
         </div>
     </footer>
-    
-    <!-- 管理员登录模态框 -->
-    <div class="modal" id="adminLoginModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">管理员登录</h3>
-                <button class="close-modal" id="closeAdminLoginModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="adminPassword">管理员密码</label>
-                    <input type="password" id="adminPassword" class="form-control">
-                </div>
-                <button class="btn btn-primary" id="loginBtn" style="width: 100%; margin-top: 20px;">登录</button>
-            </div>
+
+    <!-- 管理员面板 -->
+    <div class="admin-panel">
+        <div class="admin-btn" id="adminBtn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M19.4 15C19.2662 15.3037 19.1355 15.6064 19.0078 15.9082C18.6942 16.6743 18.3828 17.4375 18.0734 18.1977C17.957 18.4766 17.841 18.755 17.7253 19.0329C17.5469 19.4586 17.0223 19.6589 16.5966 19.4805C16.4522 19.4194 16.3168 19.3414 16.1936 19.2485C15.2929 18.5597 14.3922 17.8709 13.4915 17.1821C13.1994 16.9558 12.8062 16.9558 12.5141 17.1821C11.6134 17.8709 10.7127 18.5597 9.81201 19.2485C9.68877 19.3414 9.55341 19.4194 9.409 19.4805C8.98333 19.6589 8.45874 19.4586 8.28033 19.0329C8.16461 18.755 8.04861 18.4766 7.93223 18.1977C7.62279 17.4375 7.31141 16.6743 6.99782 15.9082C6.87011 15.6064 6.73941 15.3037 6.60564 15C6.73941 14.6963 6.87011 14.3936 6.99782 14.0918C7.31141 13.3257 7.62279 12.5625 7.93223 11.8023C8.04861 11.5234 8.16461 11.245 8.28033 10.9671C8.45874 10.5414 8.98333 10.3411 9.409 10.5195C9.55341 10.5806 9.68877 10.6586 9.81201 10.7515C10.7127 11.4403 11.6134 12.1291 12.5141 12.8179C12.8062 13.0442 13.1994 13.0442 13.4915 12.8179C14.3922 12.1291 15.2929 11.4403 16.1936 10.7515C16.3168 10.6586 16.4522 10.5806 16.5966 10.5195C17.0223 10.3411 17.5469 10.5414 17.7253 10.9671C17.841 11.245 17.957 11.5234 18.0734 11.8023C18.3828 12.5625 18.6942 13.3257 19.0078 14.0918C19.1355 14.3936 19.2662 14.6963 19.4 15Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
         </div>
     </div>
-    
-    <!-- 图片上传模态框 -->
-    <div class="modal" id="imageUploadModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">上传图片</h3>
-                <button class="close-modal" id="closeImageUploadModal">&times;</button>
+
+    <!-- 管理员模态框 -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-form">
+            <h3>管理员登录</h3>
+            <div class="form-group">
+                <label for="adminPassword">管理员密码</label>
+                <input type="password" id="adminPassword" placeholder="请输入管理员密码">
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="imageFile">选择图片</label>
-                    <input type="file" id="imageFile" class="form-control" accept="image/*">
-                </div>
-                <div id="imagePreview" class="image-preview" style="margin-bottom: 20px;"></div>
-                <button class="btn btn-primary" id="uploadImageBtn" style="width: 100%;">上传图片</button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 管理员设置区域 -->
-    <section class="admin-section" id="adminSection">
-        <div class="container">
-            <div class="admin-header">
-                <h2 class="section-title">管理员设置</h2>
-                <button class="btn btn-secondary" id="backToMain">返回主页面</button>
-            </div>
+            <button class="btn" id="loginBtn">登录</button>
+            <button class="btn" id="closeModal" style="margin-left: 10px; background: transparent;">关闭</button>
             
-            <div class="tab-container">
-                <div class="tabs">
-                    <div class="tab active" data-tab="home">首页内容</div>
-                    <div class="tab" data-tab="cases">案例管理</div>
-                    <div class="tab" data-tab="services">服务内容</div>
-                    <div class="tab" data-tab="craftsmanship">工艺标准</div>
-                    <div class="tab" data-tab="about">关于我们</div>
+            <div class="upload-section" id="uploadSection">
+                <h4 style="margin-top: 30px; margin-bottom: 20px;">图片URL管理</h4>
+                <div class="form-group">
+                    <label for="heroImageUrl">主页背景图片URL</label>
+                    <input type="text" id="heroImageUrl" placeholder="请输入图片URL">
+                    <div class="size-hint">建议尺寸：1920px × 1080px (16:9宽屏)</div>
+                    <img id="heroPreview" class="image-preview">
                 </div>
-                
-                <div class="tab-content active" id="home">
-                    <h3>首页内容管理</h3>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>项目</th>
-                                <th>内容</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="homeContentBody">
-                            <!-- 首页内容将通过JS动态加载 -->
-                        </tbody>
-                    </table>
-                    <button class="add-btn" id="addHomeContent">添加首页内容</button>
+                <div class="form-group">
+                    <label for="aboutImageUrl">关于我们图片URL</label>
+                    <input type="text" id="aboutImageUrl" placeholder="请输入图片URL">
+                    <div class="size-hint">建议尺寸：1200px × 800px (3:2比例)</div>
+                    <img id="aboutPreview" class="image-preview">
                 </div>
-                
-                <div class="tab-content" id="cases">
-                    <h3>案例管理</h3>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>案例标题</th>
-                                <th>户型</th>
-                                <th>面积</th>
-                                <th>风格</th>
-                                <th>图片</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="casesBody">
-                            <!-- 案例内容将通过JS动态加载 -->
-                        </tbody>
-                    </table>
-                    <button class="add-btn" id="addCase">添加案例</button>
+                <div class="form-group">
+                    <label for="wrightImageUrl">莱特人物图片URL</label>
+                    <input type="text" id="wrightImageUrl" placeholder="请输入图片URL">
+                    <div class="size-hint">建议尺寸：800px × 1000px (4:5比例)</div>
+                    <img id="wrightPreview" class="image-preview">
                 </div>
-                
-                <div class="tab-content" id="services">
-                    <h3>服务内容管理</h3>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>服务类型</th>
-                                <th>标题</th>
-                                <th>描述</th>
-                                <th>图片</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="servicesBody">
-                            <!-- 服务内容将通过JS动态加载 -->
-                        </tbody>
-                    </table>
+                <div class="form-group">
+                    <label for="liangImageUrl">梁思成人物图片URL</label>
+                    <input type="text" id="liangImageUrl" placeholder="请输入图片URL">
+                    <div class="size-hint">建议尺寸：800px × 1000px (4:5比例)</div>
+                    <img id="liangPreview" class="image-preview">
                 </div>
-                
-                <div class="tab-content" id="craftsmanship">
-                    <h3>工艺标准管理</h3>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>工艺类型</th>
-                                <th>项目</th>
-                                <th>标准</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="craftsmanshipBody">
-                            <!-- 工艺标准内容将通过JS动态加载 -->
-                        </tbody>
-                    </table>
+                <div class="form-group">
+                    <label for="clubImageUrl">精英俱乐部图片URL</label>
+                    <input type="text" id="clubImageUrl" placeholder="请输入图片URL">
+                    <div class="size-hint">建议尺寸：1200px × 600px (2:1比例)</div>
+                    <img id="clubPreview" class="image-preview">
                 </div>
-                
-                <div class="tab-content" id="about">
-                    <h3>关于我们内容管理</h3>
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>项目</th>
-                                <th>内容</th>
-                                <th>操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="aboutBody">
-                            <!-- 关于我们内容将通过JS动态加载 -->
-                        </tbody>
-                    </table>
-                </div>
+                <button class="btn" id="saveImageUrls">保存图片URL</button>
             </div>
         </div>
-    </section>
+    </div>
+
+    <!-- 加入俱乐部模态框 -->
+    <div class="club-modal" id="clubModal">
+        <div class="club-form">
+            <h3>加入精英圈层</h3>
+            <div class="form-group">
+                <label for="lastName">姓氏 *</label>
+                <input type="text" id="lastName" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">性别 *</label>
+                <select id="gender" required>
+                    <option value="">请选择</option>
+                    <option value="male">男</option>
+                    <option value="female">女</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="phone">电话 *</label>
+                <input type="tel" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="community">小区 *</label>
+                <input type="text" id="community" required>
+            </div>
+            <div class="form-group">
+                <label for="area">面积 (㎡) *</label>
+                <input type="number" id="area" required>
+            </div>
+            <div class="form-group">
+                <label for="deliveryTime">交房时间 *</label>
+                <input type="date" id="deliveryTime" required>
+            </div>
+            <div class="form-group">
+                <label for="contactTime">期望被联系的时间 *</label>
+                <input type="datetime-local" id="contactTime" required>
+            </div>
+            <button class="btn btn-accent" id="submitClubForm">提交申请</button>
+            <button class="btn" id="closeClubModal" style="margin-left: 10px; background: transparent;">关闭</button>
+        </div>
+    </div>
 
     <script>
-        // 初始化 LeanCloud - 使用新的配置
+        // 初始化 LeanCloud
         AV.init({
-            appId: 'JQdzlCt7fD4BWS34pLC9ydn6-gzGzoHsz',
-            appKey: 'QJWFsjgh1dhYAbdnvllUaiQP',
-            serverURL: 'https://jqdzlct7.lc-cn-n1-shared.com'
+            appId: 'rvAEarrQpxABj487BHhcN68C-gzGzoHsz',
+            appKey: '5c6aQZeAfdRfj4TD8gOHZUgJ',
+            serverURL: 'https://rvaearrq.lc-cn-n1-shared.com'
         });
 
-        // 初始数据
-        const initialData = {
-            homeContent: {
-                heroTitle: "连宏整装 · 颜屿设计",
-                heroSubtitle: "法蕴美学 · 精工筑家。以设计赋能生活，用时光检验品质，为客户创造颜值与实用兼具的居住空间。",
-                heroImage: "",
-                advantages: [
-                    {
-                        icon: "💰",
-                        title: "价格透明",
-                        description: "0增项合约，材料溯源透明，预算=决算，让装修回归透明"
-                    },
-                    {
-                        icon: "👑",
-                        title: "品质保障",
-                        description: "德系工艺标准，毫米级验收，48道品控节点，用时光检验品质"
-                    },
-                    {
-                        icon: "💎",
-                        title: "设计领先",
-                        description: "YANVUE颜屿设计，融合法式景观思维与本土生活智慧，让功能与艺术共生"
-                    }
-                ]
-            },
-            services: {
-                full: {
-                    title: "整装服务",
-                    description: "从设计到施工，从主材到软装，我们提供一站式整体解决方案。您只需拎包入住，享受高品质的居住体验。我们精选一线品牌材料，采用德系工艺标准，确保每一个细节都达到精工品质。",
-                    features: [
-                        "一站式整体解决方案",
-                        "精选一线品牌材料",
-                        "德系工艺标准",
-                        "专业施工团队",
-                        "全程管家服务"
-                    ],
-                    image: ""
-                },
-                complete: {
-                    title: "全案设计",
-                    description: "我们提供从概念设计到施工落地的全流程服务，包括空间规划、材料选配、软装搭配等，确保设计理念完美呈现。YANVUE颜屿设计团队将根据您的需求和生活习惯，打造专属的居住空间。",
-                    features: [
-                        "全流程设计服务",
-                        "个性化空间规划",
-                        "专业材料选配",
-                        "软装搭配指导",
-                        "施工跟进服务"
-                    ],
-                    image: ""
-                },
-                semi: {
-                    title: "半包服务",
-                    description: "我们提供基础施工服务，包括水电改造、泥瓦工、木工、油漆等，您可自行选购主材，灵活控制预算。我们采用精工工艺标准，确保基础施工质量，为您的家居打下坚实基础。",
-                    features: [
-                        "基础施工服务",
-                        "精工工艺标准",
-                        "灵活控制预算",
-                        "专业施工指导",
-                        "质量保障体系"
-                    ],
-                    image: ""
-                }
-            },
-            cases: [
-                {
-                    id: 1,
-                    title: "现代简约平层住宅",
-                    description: "120㎡三室两厅，采用现代简约风格设计，打造舒适宜居的生活空间。",
-                    area: "120㎡",
-                    layout: "三室两厅",
-                    style: "现代",
-                    type: "apartment",
-                    image: ""
-                }
-            ],
-            craftsmanship: {
-                hydropower: [
-                    { id: 1, item: "材料确认", standard: "施工前业主签字确认材料品牌规格", method: "查验单据" },
-                    { id: 2, item: "弹线开槽", standard: "双线弹线（切割线+完成线），横平竖直", method: "激光投线仪" },
-                    { id: 3, item: "横槽限制", standard: "承重墙≤300mm", method: "卷尺测量" }
-                ],
-                carpentry: [
-                    { id: 1, item: "材料确认", standard: "施工前业主签字确认材料品牌规格", method: "查验单据" },
-                    { id: 2, item: "±0.00基准线", standard: "全屋贯通误差≤2mm", method: "激光水平仪" },
-                    { id: 3, item: "吊杆间距", standard: "≤800mm（主骨端头150mm内必设）", method: "卷尺" }
-                ],
-                tiling: [
-                    { id: 1, item: "材料确认", standard: "施工前业主签字确认材料品牌规格", method: "查验单据" },
-                    { id: 2, item: "激光水平线", standard: "全屋±0.00线贯通，误差≤1mm", method: "激光水平仪" },
-                    { id: 3, item: "新老墙交接", standard: "铲除老墙抹灰层≥150mm+挂钢丝网", method: "目测+尺量" }
-                ],
-                painting: [
-                    { id: 1, item: "材料确认", standard: "施工前业主签字确认材料品牌规格", method: "查验单据" },
-                    { id: 2, item: "墙面空鼓率", standard: "≤3%，空鼓处切割修补", method: "空鼓锤+标记" },
-                    { id: 3, item: "基础平整度", standard: "误差≤4mm/2m", method: "2m靠尺" }
-                ]
-            },
-            about: {
-                title: "关于连宏整装",
-                description: "YANVUE 颜屿整装，源自法语 VUE（景观）与东方美学'颜'的融合，寓意'将家雕琢为高颜值的舒适景观'。我们以精工标准重构居住体验，用设计让每一寸空间承载生活的诗意，让每一次归家都成为穿越风景的旅程。",
-                image: "",
-                milestones: [
-                    { year: "2014", description: "西安连宏环保建材有限公司成立" },
-                    { year: "2017", description: "20亩智造基地，120+就业岗位" },
-                    { year: "2023", description: "陕西省A级纳税人" },
-                    { year: "2025", description: "成立连宏整装，建材→设计→装修一体化" }
-                ]
-            }
-        };
-
-        // 当前用户和管理状态
-        let currentUser = null;
-        let isAdmin = false;
-        let currentUploadTarget = null;
-
-        // DOM元素
-        const adminBtn = document.getElementById('adminBtn');
-        const adminLoginModal = document.getElementById('adminLoginModal');
-        const closeAdminLoginModal = document.getElementById('closeAdminLoginModal');
-        const loginBtn = document.getElementById('loginBtn');
-        const adminPassword = document.getElementById('adminPassword');
-        const adminSection = document.getElementById('adminSection');
-        const backToMain = document.getElementById('backToMain');
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navMenu = document.getElementById('navMenu');
-        const navbar = document.getElementById('navbar');
-        const tabs = document.querySelectorAll('.tab');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const serviceTabs = document.querySelectorAll('.service-tab');
-        const serviceContents = document.querySelectorAll('.service-content');
-        const processTabs = document.querySelectorAll('.process-tab');
-        const processContents = document.querySelectorAll('.process-content');
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const casesGrid = document.getElementById('casesGrid');
-        const contactForm = document.getElementById('contactForm');
-        const imageUploadModal = document.getElementById('imageUploadModal');
-        const closeImageUploadModal = document.getElementById('closeImageUploadModal');
-        const imageFile = document.getElementById('imageFile');
-        const imagePreview = document.getElementById('imagePreview');
-        const uploadImageBtn = document.getElementById('uploadImageBtn');
-
-        // 初始化页面
+        // 页面加载时从LeanCloud获取图片URL
         document.addEventListener('DOMContentLoaded', function() {
-            initializeData();
-            loadHomeContent();
-            loadServices();
-            loadCases();
-            loadCraftsmanship();
-            loadAbout();
-            setupEventListeners();
+            loadImagesFromLeanCloud();
         });
 
-        // 初始化数据到LeanCloud - 已修复ACL权限问题
-        async function initializeData() {
-            try {
-                // 检查WebsiteContent是否已存在数据
-                const WebsiteContent = AV.Object.extend('WebsiteContent');
-                const query = new AV.Query('WebsiteContent');
-                let content = await query.first();
-                
-                if (!content) {
-                    // 创建初始数据
-                    console.log('创建初始WebsiteContent数据...');
-                    content = new WebsiteContent();
+        // 从LeanCloud加载图片URL
+        function loadImagesFromLeanCloud() {
+            const query = new AV.Query('SiteImages');
+            query.first().then((imageSettings) => {
+                if (imageSettings) {
+                    const heroImageUrl = imageSettings.get('heroImageUrl');
+                    const aboutImageUrl = imageSettings.get('aboutImageUrl');
+                    const wrightImageUrl = imageSettings.get('wrightImageUrl');
+                    const liangImageUrl = imageSettings.get('liangImageUrl');
+                    const clubImageUrl = imageSettings.get('clubImageUrl');
                     
-                    content.set('homeContent', initialData.homeContent);
-                    content.set('services', initialData.services);
-                    content.set('cases', initialData.cases);
-                    content.set('craftsmanship', initialData.craftsmanship);
-                    content.set('about', initialData.about);
+                    if (heroImageUrl) {
+                        updateImageWithCacheBusting('hero-bg-image', heroImageUrl);
+                    }
                     
-                    // 设置ACL权限 - 修复写入权限问题
-                    const acl = new AV.ACL();
-                    acl.setPublicWriteAccess(true);
-                    acl.setPublicReadAccess(true);
-                    content.setACL(acl);
+                    if (aboutImageUrl) {
+                        updateImageWithCacheBusting('about-image', aboutImageUrl);
+                    }
                     
-                    await content.save();
-                    console.log('初始WebsiteContent数据已保存到LeanCloud');
-                }
-                
-                // 检查Contact类是否存在
-                const Contact = AV.Object.extend('Contact');
-                const contactQuery = new AV.Query('Contact');
-                contactQuery.limit(1);
-                await contactQuery.find();
-                
-                console.log('LeanCloud数据初始化完成');
-                return true;
-            } catch (error) {
-                console.error('初始化数据失败:', error);
-                // 如果是Class不存在错误，尝试创建Class
-                if (error.code === 101) {
-                    console.log('尝试创建WebsiteContent Class...');
-                    try {
-                        // 尝试创建一条记录来隐式创建Class
-                        const WebsiteContent = AV.Object.extend('WebsiteContent');
-                        const content = new WebsiteContent();
-                        content.set('test', 'init');
-                        
-                        // 设置ACL权限
-                        const acl = new AV.ACL();
-                        acl.setPublicWriteAccess(true);
-                        acl.setPublicReadAccess(true);
-                        content.setACL(acl);
-                        
-                        await content.save();
-                        console.log('WebsiteContent Class创建成功');
-                        // 重新初始化数据
-                        return await initializeData();
-                    } catch (createError) {
-                        console.error('创建Class失败:', createError);
+                    if (wrightImageUrl) {
+                        updateImageWithCacheBusting('wright-image', wrightImageUrl);
+                    }
+                    
+                    if (liangImageUrl) {
+                        updateImageWithCacheBusting('liang-image', liangImageUrl);
+                    }
+                    
+                    if (clubImageUrl) {
+                        updateImageWithCacheBusting('club-image', clubImageUrl);
                     }
                 }
-                return false;
-            }
+            }).catch(error => {
+                console.error('加载图片设置失败:', error);
+            });
         }
 
-        // 获取网站内容
-        async function getWebsiteContent() {
-            try {
-                const query = new AV.Query('WebsiteContent');
-                const content = await query.first();
-                
-                if (content) {
-                    return {
-                        homeContent: content.get('homeContent') || initialData.homeContent,
-                        services: content.get('services') || initialData.services,
-                        cases: content.get('cases') || initialData.cases,
-                        craftsmanship: content.get('craftsmanship') || initialData.craftsmanship,
-                        about: content.get('about') || initialData.about
-                    };
-                } else {
-                    console.log('使用本地初始数据');
-                    return initialData;
-                }
-            } catch (error) {
-                console.error('获取网站内容失败:', error);
-                return initialData;
-            }
+        // 更新图片并添加缓存破坏参数
+        function updateImageWithCacheBusting(elementId, imageUrl) {
+            if (!imageUrl) return;
+            
+            // 添加时间戳参数防止缓存
+            const timestamp = new Date().getTime();
+            const separator = imageUrl.includes('?') ? '&' : '?';
+            const cacheBustedUrl = imageUrl + separator + 't=' + timestamp;
+            
+            const imgElement = document.getElementById(elementId);
+            imgElement.src = cacheBustedUrl;
+            imgElement.onload = function() {
+                console.log('图片加载成功:', elementId);
+            };
+            imgElement.onerror = function() {
+                console.error('图片加载失败:', elementId, cacheBustedUrl);
+            };
         }
 
-        // 保存网站内容 - 已修复ACL权限问题
-        async function saveWebsiteContent(key, data) {
-            try {
-                const query = new AV.Query('WebsiteContent');
-                let content = await query.first();
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // 管理员功能
+        document.getElementById('adminBtn').addEventListener('click', function() {
+            document.getElementById('adminModal').classList.add('active');
+        });
+
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('adminModal').classList.remove('active');
+        });
+
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === '13572145395') {
+                document.getElementById('uploadSection').classList.add('active');
+                alert('登录成功！您现在可以管理图片URL。');
                 
-                if (content) {
-                    content.set(key, data);
-                    
-                    // 设置写入权限为所有人可写 - 修复写入权限问题
-                    const acl = new AV.ACL();
-                    acl.setPublicWriteAccess(true);
-                    acl.setPublicReadAccess(true);
-                    content.setACL(acl);
-                    
-                    await content.save();
-                    console.log(`${key} 数据保存成功`);
-                    return true;
-                } else {
-                    // 如果没有内容记录，创建新的
-                    const WebsiteContent = AV.Object.extend('WebsiteContent');
-                    content = new WebsiteContent();
-                    
-                    // 设置所有数据
-                    content.set('homeContent', initialData.homeContent);
-                    content.set('services', initialData.services);
-                    content.set('cases', initialData.cases);
-                    content.set('craftsmanship', initialData.craftsmanship);
-                    content.set('about', initialData.about);
-                    
-                    // 更新特定的key
-                    content.set(key, data);
-                    
-                    // 设置写入权限为所有人可写 - 修复写入权限问题
-                    const acl = new AV.ACL();
-                    acl.setPublicWriteAccess(true);
-                    acl.setPublicReadAccess(true);
-                    content.setACL(acl);
-                    
-                    await content.save();
-                    console.log(`新的WebsiteContent创建成功，${key} 数据已保存`);
-                    return true;
+                // 加载当前图片URL设置
+                const query = new AV.Query('SiteImages');
+                query.first().then((imageSettings) => {
+                    if (imageSettings) {
+                        document.getElementById('heroImageUrl').value = imageSettings.get('heroImageUrl') || '';
+                        document.getElementById('aboutImageUrl').value = imageSettings.get('aboutImageUrl') || '';
+                        document.getElementById('wrightImageUrl').value = imageSettings.get('wrightImageUrl') || '';
+                        document.getElementById('liangImageUrl').value = imageSettings.get('liangImageUrl') || '';
+                        document.getElementById('clubImageUrl').value = imageSettings.get('clubImageUrl') || '';
+                        
+                        // 更新预览
+                        if (imageSettings.get('heroImageUrl')) {
+                            updateImageWithCacheBusting('heroPreview', imageSettings.get('heroImageUrl'));
+                            document.getElementById('heroPreview').classList.add('active');
+                        }
+                        if (imageSettings.get('aboutImageUrl')) {
+                            updateImageWithCacheBusting('aboutPreview', imageSettings.get('aboutImageUrl'));
+                            document.getElementById('aboutPreview').classList.add('active');
+                        }
+                        if (imageSettings.get('wrightImageUrl')) {
+                            updateImageWithCacheBusting('wrightPreview', imageSettings.get('wrightImageUrl'));
+                            document.getElementById('wrightPreview').classList.add('active');
+                        }
+                        if (imageSettings.get('liangImageUrl')) {
+                            updateImageWithCacheBusting('liangPreview', imageSettings.get('liangImageUrl'));
+                            document.getElementById('liangPreview').classList.add('active');
+                        }
+                        if (imageSettings.get('clubImageUrl')) {
+                            updateImageWithCacheBusting('clubPreview', imageSettings.get('clubImageUrl'));
+                            document.getElementById('clubPreview').classList.add('active');
+                        }
+                    }
+                }).catch(error => {
+                    console.error('加载图片设置失败:', error);
+                });
+                
+            } else {
+                alert('密码错误！');
+            }
+        });
+
+        // 保存图片URL到LeanCloud
+        document.getElementById('saveImageUrls').addEventListener('click', function() {
+            const heroImageUrl = document.getElementById('heroImageUrl').value;
+            const aboutImageUrl = document.getElementById('aboutImageUrl').value;
+            const wrightImageUrl = document.getElementById('wrightImageUrl').value;
+            const liangImageUrl = document.getElementById('liangImageUrl').value;
+            const clubImageUrl = document.getElementById('clubImageUrl').value;
+            
+            const query = new AV.Query('SiteImages');
+            query.first().then((imageSettings) => {
+                if (!imageSettings) {
+                    imageSettings = new AV.Object('SiteImages');
                 }
-            } catch (error) {
+                
+                imageSettings.set('heroImageUrl', heroImageUrl);
+                imageSettings.set('aboutImageUrl', aboutImageUrl);
+                imageSettings.set('wrightImageUrl', wrightImageUrl);
+                imageSettings.set('liangImageUrl', liangImageUrl);
+                imageSettings.set('clubImageUrl', clubImageUrl);
+                
+                return imageSettings.save();
+            }).then(() => {
+                alert('图片URL保存成功！');
+                
+                // 立即更新页面上的图片
+                if (heroImageUrl) {
+                    updateImageWithCacheBusting('hero-bg-image', heroImageUrl);
+                    updateImageWithCacheBusting('heroPreview', heroImageUrl);
+                    document.getElementById('heroPreview').classList.add('active');
+                }
+                
+                if (aboutImageUrl) {
+                    updateImageWithCacheBusting('about-image', aboutImageUrl);
+                    updateImageWithCacheBusting('aboutPreview', aboutImageUrl);
+                    document.getElementById('aboutPreview').classList.add('active');
+                }
+                
+                if (wrightImageUrl) {
+                    updateImageWithCacheBusting('wright-image', wrightImageUrl);
+                    updateImageWithCacheBusting('wrightPreview', wrightImageUrl);
+                    document.getElementById('wrightPreview').classList.add('active');
+                }
+                
+                if (liangImageUrl) {
+                    updateImageWithCacheBusting('liang-image', liangImageUrl);
+                    updateImageWithCacheBusting('liangPreview', liangImageUrl);
+                    document.getElementById('liangPreview').classList.add('active');
+                }
+                
+                if (clubImageUrl) {
+                    updateImageWithCacheBusting('club-image', clubImageUrl);
+                    updateImageWithCacheBusting('clubPreview', clubImageUrl);
+                    document.getElementById('clubPreview').classList.add('active');
+                }
+                
+            }).catch(error => {
+                console.error('保存图片URL失败:', error);
+                alert('保存失败，请稍后重试。');
+            });
+        });
+
+        // 报价按钮跳转
+        document.querySelectorAll('a[href="https://xinzhenhua.github.io/pricing/"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                // 允许默认行为，直接跳转到外部链接
+            });
+        });
+
+        // 加入俱乐部按钮
+        document.getElementById('joinClubBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('clubModal').classList.add('active');
+        });
+
+        document.getElementById('closeClubModal').addEventListener('click', function() {
+            document.getElementById('clubModal').classList.remove('active');
+        });
+
+        // 提交俱乐部表单
+        document.getElementById('submitClubForm').addEventListener('click', function() {
+            const lastName = document.getElementById('lastName').value;
+            const gender = document.getElementById('gender').value;
+            const phone = document.getElementById('phone').value;
+            const community = document.getElementById('community').value;
+            const area = document.getElementById('area').value;
+            const deliveryTime = document.getElementById('deliveryTime').value;
+            const contactTime = document.getElementById('contactTime').value;
+            
+            if (!lastName || !gender || !phone || !community || !area || !deliveryTime || !contactTime) {
+                alert('请填写所有必填字段！');
+                return;
+            }
+            
+            // 保存到 LeanCloud
+            const ClubApplication = AV.Object.extend('ClubApplication');
+            const application = new ClubApplication();
+            
+            application.set('lastName', lastName);
+            application.set('gender', gender);
+            application.set('phone', phone);
+            application.set('community', community);
+            application.set('area', parseFloat(area));
+            application.set('deliveryTime', new Date(deliveryTime));
+            application.set('contactTime', new Date(contactTime));
+            
+            application.save().then(() => {
+                alert('申请提交成功！我们会尽快与您联系。');
+                document.getElementById('clubModal').classList.remove('active');
+                // 清空表单
+                document.getElementById('lastName').value = '';
+                document.getElementById('gender').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('community').value = '';
+                document.getElementById('area').value = '';
+                document.getElementById('deliveryTime').value = '';
+                document.getElementById('contactTime').value = '';
+            }).catch(error => {
                 console.error('保存数据失败:', error);
-                alert('保存失败: ' + error.message);
-                return false;
-            }
-        }
+                alert('提交失败，请稍后重试或直接联系我们。');
+            });
+        });
 
-        // 上传图片到LeanCloud
-        async function uploadImageToLeanCloud(file) {
-            return new Promise((resolve, reject) => {
-                // 将文件转换为Base64
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => {
-                    const base64 = reader.result.split(',')[1]; // 移除Data URL前缀
-                    
-                    // 创建LeanCloud文件对象
-                    const avFile = new AV.File(file.name, { base64 });
-                    
-                    // 上传到LeanCloud
-                    avFile.save().then(
-                        (savedFile) => {
-                            console.log('文件上传成功', savedFile);
-                            resolve(savedFile.attributes.url); // 返回图片URL
-                        },
-                        (error) => {
-                            console.error('文件上传失败', error);
-                            reject(error);
-                        }
-                    );
-                };
-                reader.onerror = error => reject(error);
-            });
-        }
-
-        // 保存联系表单
-        async function saveContactForm(data) {
-            try {
-                const Contact = AV.Object.extend('Contact');
-                const contact = new Contact();
-                
-                contact.set('name', data.name);
-                contact.set('phone', data.phone);
-                contact.set('message', data.message);
-                
-                await contact.save();
-                console.log('联系表单已保存到云端');
-                return true;
-            } catch (error) {
-                console.error('保存联系表单失败:', error);
-                return false;
-            }
-        }
-
-        // 加载首页内容
-        async function loadHomeContent() {
-            const content = await getWebsiteContent();
-            const homeContent = content.homeContent;
-            
-            // 更新Hero区域
-            document.querySelector('.hero-title').textContent = homeContent.heroTitle;
-            document.querySelector('.hero-subtitle').textContent = homeContent.heroSubtitle;
-            
-            const heroImage = document.querySelector('.hero-image');
-            if (homeContent.heroImage) {
-                heroImage.innerHTML = `<img src="${homeContent.heroImage}" alt="连宏整装">`;
-            } else {
-                heroImage.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; background-color: var(--lighter-gray); color: var(--medium-gray);">请上传首页图片</div>`;
-            }
-            
-            // 更新优势区域
-            const advantagesGrid = document.querySelector('.advantages-grid');
-            advantagesGrid.innerHTML = '';
-            
-            homeContent.advantages.forEach(advantage => {
-                const advantageCard = document.createElement('div');
-                advantageCard.className = 'advantage-card';
-                advantageCard.innerHTML = `
-                    <div class="advantage-icon">${advantage.icon}</div>
-                    <h3 class="advantage-title">${advantage.title}</h3>
-                    <p class="advantage-desc">${advantage.description}</p>
-                `;
-                advantagesGrid.appendChild(advantageCard);
-            });
-        }
-
-        // 加载服务内容
-        async function loadServices() {
-            const content = await getWebsiteContent();
-            const services = content.services;
-            
-            // 更新整装服务
-            const fullService = document.getElementById('full-service');
-            fullService.querySelector('.service-text h3').textContent = services.full.title;
-            fullService.querySelector('.service-text p').textContent = services.full.description;
-            
-            const fullFeatures = fullService.querySelector('.service-features');
-            fullFeatures.innerHTML = '';
-            services.full.features.forEach(feature => {
-                const li = document.createElement('li');
-                li.textContent = feature;
-                fullFeatures.appendChild(li);
-            });
-            
-            const fullImage = fullService.querySelector('.service-image');
-            if (services.full.image) {
-                fullImage.innerHTML = `<img src="${services.full.image}" alt="${services.full.title}">`;
-            } else {
-                fullImage.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; background-color: var(--lighter-gray); color: var(--medium-gray);">请上传图片</div>`;
-            }
-            
-            // 更新全案设计
-            const completeService = document.getElementById('complete-service');
-            completeService.querySelector('.service-text h3').textContent = services.complete.title;
-            completeService.querySelector('.service-text p').textContent = services.complete.description;
-            
-            const completeFeatures = completeService.querySelector('.service-features');
-            completeFeatures.innerHTML = '';
-            services.complete.features.forEach(feature => {
-                const li = document.createElement('li');
-                li.textContent = feature;
-                completeFeatures.appendChild(li);
-            });
-            
-            const completeImage = completeService.querySelector('.service-image');
-            if (services.complete.image) {
-                completeImage.innerHTML = `<img src="${services.complete.image}" alt="${services.complete.title}">`;
-            } else {
-                completeImage.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; background-color: var(--lighter-gray); color: var(--medium-gray);">请上传图片</div>`;
-            }
-            
-            // 更新半包服务
-            const semiService = document.getElementById('semi-service');
-            semiService.querySelector('.service-text h3').textContent = services.semi.title;
-            semiService.querySelector('.service-text p').textContent = services.semi.description;
-            
-            const semiFeatures = semiService.querySelector('.service-features');
-            semiFeatures.innerHTML = '';
-            services.semi.features.forEach(feature => {
-                const li = document.createElement('li');
-                li.textContent = feature;
-                semiFeatures.appendChild(li);
-            });
-            
-            const semiImage = semiService.querySelector('.service-image');
-            if (services.semi.image) {
-                semiImage.innerHTML = `<img src="${services.semi.image}" alt="${services.semi.title}">`;
-            } else {
-                semiImage.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; background-color: var(--lighter-gray); color: var(--medium-gray);">请上传图片</div>`;
-            }
-        }
-
-        // 加载案例
-        async function loadCases() {
-            const content = await getWebsiteContent();
-            const cases = content.cases;
-            
-            casesGrid.innerHTML = '';
-            
-            cases.forEach(caseItem => {
-                const caseCard = document.createElement('div');
-                caseCard.className = 'case-card';
-                caseCard.setAttribute('data-type', caseItem.type);
-                caseCard.setAttribute('data-style', caseItem.style);
-                
-                const caseImage = caseItem.image ? 
-                    `<img src="${caseItem.image}" alt="${caseItem.title}">` :
-                    `<div style="display: flex; align-items: center; justify-content: center; height: 100%; background-color: var(--lighter-gray); color: var(--medium-gray);">请上传图片</div>`;
-                
-                caseCard.innerHTML = `
-                    <div class="case-image">
-                        ${caseImage}
-                    </div>
-                    <div class="case-info">
-                        <h3 class="case-title">${caseItem.title}</h3>
-                        <div class="case-meta">
-                            <span>${caseItem.area}</span>
-                            <span>${caseItem.layout}</span>
-                            <span>${caseItem.style}</span>
-                        </div>
-                        <p class="case-desc">${caseItem.description}</p>
-                    </div>
-                `;
-                
-                casesGrid.appendChild(caseCard);
-            });
-        }
-
-        // 加载工艺标准
-        async function loadCraftsmanship() {
-            const content = await getWebsiteContent();
-            const craftsmanship = content.craftsmanship;
-            
-            // 更新水电工艺
-            const hydropowerTable = document.querySelector('#hydropower-process tbody');
-            hydropowerTable.innerHTML = '';
-            
-            craftsmanship.hydropower.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.id}</td>
-                    <td>${item.item}</td>
-                    <td>${item.standard}</td>
-                    <td>${item.method}</td>
-                `;
-                hydropowerTable.appendChild(row);
-            });
-            
-            // 更新木工工艺
-            const carpentryTable = document.querySelector('#carpentry-process tbody');
-            carpentryTable.innerHTML = '';
-            
-            craftsmanship.carpentry.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.id}</td>
-                    <td>${item.item}</td>
-                    <td>${item.standard}</td>
-                    <td>${item.method}</td>
-                `;
-                carpentryTable.appendChild(row);
-            });
-            
-            // 更新瓦工工艺
-            const tilingTable = document.querySelector('#tiling-process tbody');
-            tilingTable.innerHTML = '';
-            
-            craftsmanship.tiling.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.id}</td>
-                    <td>${item.item}</td>
-                    <td>${item.standard}</td>
-                    <td>${item.method}</td>
-                `;
-                tilingTable.appendChild(row);
-            });
-            
-            // 更新油工工艺
-            const paintingTable = document.querySelector('#painting-process tbody');
-            paintingTable.innerHTML = '';
-            
-            craftsmanship.painting.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.id}</td>
-                    <td>${item.item}</td>
-                    <td>${item.standard}</td>
-                    <td>${item.method}</td>
-                `;
-                paintingTable.appendChild(row);
-            });
-        }
-
-        // 加载关于我们
-        async function loadAbout() {
-            const content = await getWebsiteContent();
-            const about = content.about;
-            
-            // 更新关于我们内容
-            document.querySelector('.about-text h2').textContent = about.title;
-            document.querySelector('.about-text p').textContent = about.description;
-            
-            const aboutImage = document.querySelector('.about-image');
-            if (about.image) {
-                aboutImage.innerHTML = `<img src="${about.image}" alt="${about.title}">`;
-            } else {
-                aboutImage.innerHTML = `<div style="display: flex; align-items: center; justify-content: center; height: 100%; background-color: var(--lighter-gray); color: var(--medium-gray);">请上传图片</div>`;
-            }
-            
-            // 更新发展历程
-            const milestones = document.querySelector('.milestones');
-            milestones.innerHTML = '';
-            
-            about.milestones.forEach(milestone => {
-                const milestoneDiv = document.createElement('div');
-                milestoneDiv.className = 'milestone';
-                milestoneDiv.innerHTML = `
-                    <div class="milestone-year">${milestone.year}</div>
-                    <div class="milestone-desc">${milestone.description}</div>
-                `;
-                milestones.appendChild(milestoneDiv);
-            });
-        }
-
-        // 设置事件监听器
-        function setupEventListeners() {
-            // 导航栏滚动效果
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-            
-            // 移动端菜单
-            mobileMenuBtn.addEventListener('click', function() {
-                navMenu.classList.toggle('active');
-            });
-            
-            // 平滑滚动
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        // 关闭移动端菜单
-                        navMenu.classList.remove('active');
-                        
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // 服务选项卡
-            serviceTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const serviceType = this.getAttribute('data-service');
-                    
-                    // 移除所有active类
-                    serviceTabs.forEach(t => t.classList.remove('active'));
-                    serviceContents.forEach(c => c.classList.remove('active'));
-                    
-                    // 添加active类到当前选项卡
-                    this.classList.add('active');
-                    document.getElementById(`${serviceType}-service`).classList.add('active');
-                });
-            });
-            
-            // 工艺选项卡
-            processTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const processType = this.getAttribute('data-process');
-                    
-                    // 移除所有active类
-                    processTabs.forEach(t => t.classList.remove('active'));
-                    processContents.forEach(c => c.classList.remove('active'));
-                    
-                    // 添加active类到当前选项卡
-                    this.classList.add('active');
-                    document.getElementById(`${processType}-process`).classList.add('active');
-                });
-            });
-            
-            // 案例筛选
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const filter = this.getAttribute('data-filter');
-                    
-                    // 移除所有active类
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    
-                    // 添加active类到当前按钮
-                    this.classList.add('active');
-                    
-                    // 筛选案例
-                    const caseCards = document.querySelectorAll('.case-card');
-                    caseCards.forEach(card => {
-                        if (filter === 'all' || card.getAttribute('data-type') === filter || card.getAttribute('data-style') === filter) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
-            
-            // 联系表单提交
-            contactForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const name = document.getElementById('name').value;
-                const phone = document.getElementById('phone').value;
-                const message = document.getElementById('message').value;
-                
-                if (!name || !phone) {
-                    alert('请填写姓名和电话！');
-                    return;
-                }
-                
-                // 验证电话号码
-                const phoneRegex = /^1[3-9]\d{9}$/;
-                if (!phoneRegex.test(phone)) {
-                    alert('请输入有效的11位手机号码！');
-                    return;
-                }
-                
-                const success = await saveContactForm({ name, phone, message });
-                
-                if (success) {
-                    alert('感谢您的咨询，我们会尽快与您联系！');
-                    contactForm.reset();
-                } else {
-                    alert('提交失败，请稍后重试！');
-                }
-            });
-            
-            // 管理员功能
-            adminBtn.addEventListener('click', function() {
-                adminLoginModal.style.display = 'flex';
-            });
-            
-            closeAdminLoginModal.addEventListener('click', function() {
-                adminLoginModal.style.display = 'none';
-            });
-            
-            window.addEventListener('click', function(e) {
-                if (e.target === adminLoginModal) {
-                    adminLoginModal.style.display = 'none';
-                }
-                if (e.target === imageUploadModal) {
-                    imageUploadModal.style.display = 'none';
-                }
-            });
-            
-            loginBtn.addEventListener('click', function() {
-                const password = adminPassword.value;
-                if (password === '13572145395') {
-                    isAdmin = true;
-                    adminLoginModal.style.display = 'none';
-                    adminSection.style.display = 'block';
-                    window.scrollTo(0, 0);
-                    loadAdminContent();
-                } else {
-                    alert('密码错误！');
-                }
-            });
-            
-            backToMain.addEventListener('click', function() {
-                adminSection.style.display = 'none';
-                isAdmin = false;
-                window.scrollTo(0, 0);
-            });
-            
-            // 管理员选项卡
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-                    
-                    // 移除所有active类
-                    tabs.forEach(t => t.classList.remove('active'));
-                    tabContents.forEach(c => c.classList.remove('active'));
-                    
-                    // 添加active类到当前选项卡
-                    this.classList.add('active');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
-            
-            // 图片上传功能
-            closeImageUploadModal.addEventListener('click', function() {
-                imageUploadModal.style.display = 'none';
-            });
-            
-            imageFile.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    // 显示预览
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        imagePreview.innerHTML = `<img src="${e.target.result}" style="max-width: 100%;">`;
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-            
-            uploadImageBtn.addEventListener('click', async function() {
-                const file = imageFile.files[0];
-                if (!file) {
-                    alert('请先选择图片');
-                    return;
-                }
-
-                try {
-                    const imageUrl = await uploadImageToLeanCloud(file);
-                    alert(`图片上传成功！`);
-                    
-                    // 将图片URL设置到目标输入框
-                    if (currentUploadTarget) {
-                        currentUploadTarget.value = imageUrl;
-                    }
-                    
-                    // 清空预览和输入
-                    imagePreview.innerHTML = '';
-                    imageFile.value = '';
-                    imageUploadModal.style.display = 'none';
-                    
-                    return imageUrl;
-                } catch (error) {
-                    alert('图片上传失败，请重试');
-                    console.error('Upload error:', error);
-                }
-            });
-        }
-
-        // 加载管理员内容
-        async function loadAdminContent() {
-            const content = await getWebsiteContent();
-            
-            // 加载首页内容管理
-            const homeContentBody = document.getElementById('homeContentBody');
-            homeContentBody.innerHTML = '';
-            
-            // 添加Hero内容
-            const heroTitleRow = document.createElement('tr');
-            heroTitleRow.innerHTML = `
-                <td>Hero标题</td>
-                <td><input type="text" value="${content.homeContent.heroTitle}" data-key="heroTitle"></td>
-                <td class="admin-actions">
-                    <button class="admin-btn-small save-home-content">保存</button>
-                </td>
-            `;
-            homeContentBody.appendChild(heroTitleRow);
-            
-            const heroSubtitleRow = document.createElement('tr');
-            heroSubtitleRow.innerHTML = `
-                <td>Hero副标题</td>
-                <td><textarea data-key="heroSubtitle">${content.homeContent.heroSubtitle}</textarea></td>
-                <td class="admin-actions">
-                    <button class="admin-btn-small save-home-content">保存</button>
-                </td>
-            `;
-            homeContentBody.appendChild(heroSubtitleRow);
-            
-            const heroImageRow = document.createElement('tr');
-            heroImageRow.innerHTML = `
-                <td>Hero图片</td>
-                <td>
-                    <input type="text" value="${content.homeContent.heroImage}" data-key="heroImage" readonly>
-                    <button class="upload-btn" data-target="heroImage">上传图片</button>
-                </td>
-                <td class="admin-actions">
-                    <button class="admin-btn-small save-home-content">保存</button>
-                </td>
-            `;
-            homeContentBody.appendChild(heroImageRow);
-            
-            // 添加优势内容
-            content.homeContent.advantages.forEach((advantage, index) => {
-                const advantageRow = document.createElement('tr');
-                advantageRow.innerHTML = `
-                    <td>优势 ${index + 1}</td>
-                    <td>
-                        <input type="text" value="${advantage.icon}" data-key="advantages.${index}.icon" placeholder="图标">
-                        <input type="text" value="${advantage.title}" data-key="advantages.${index}.title" placeholder="标题">
-                        <textarea data-key="advantages.${index}.description" placeholder="描述">${advantage.description}</textarea>
-                    </td>
-                    <td class="admin-actions">
-                        <button class="admin-btn-small save-home-content">保存</button>
-                        <button class="admin-btn-small delete delete-advantage" data-index="${index}">删除</button>
-                    </td>
-                `;
-                homeContentBody.appendChild(advantageRow);
-            });
-            
-            // 加载案例管理
-            const casesBody = document.getElementById('casesBody');
-            casesBody.innerHTML = '';
-            
-            content.cases.forEach((caseItem, index) => {
-                const caseRow = document.createElement('tr');
-                caseRow.innerHTML = `
-                    <td><input type="text" value="${caseItem.title}" data-key="cases.${index}.title"></td>
-                    <td><input type="text" value="${caseItem.layout}" data-key="cases.${index}.layout"></td>
-                    <td><input type="text" value="${caseItem.area}" data-key="cases.${index}.area"></td>
-                    <td><input type="text" value="${caseItem.style}" data-key="cases.${index}.style"></td>
-                    <td>
-                        <input type="text" value="${caseItem.image}" data-key="cases.${index}.image" readonly>
-                        <button class="upload-btn" data-target="cases.${index}.image">上传图片</button>
-                    </td>
-                    <td class="admin-actions">
-                        <button class="admin-btn-small save-case" data-index="${index}">保存</button>
-                        <button class="admin-btn-small delete delete-case" data-index="${index}">删除</button>
-                    </td>
-                `;
-                casesBody.appendChild(caseRow);
-            });
-            
-            // 加载服务内容管理
-            const servicesBody = document.getElementById('servicesBody');
-            servicesBody.innerHTML = '';
-            
-            // 整装服务
-            const fullServiceRow = document.createElement('tr');
-            fullServiceRow.innerHTML = `
-                <td>整装服务</td>
-                <td><input type="text" value="${content.services.full.title}" data-key="services.full.title"></td>
-                <td><textarea data-key="services.full.description">${content.services.full.description}</textarea></td>
-                <td>
-                    <input type="text" value="${content.services.full.image}" data-key="services.full.image" readonly>
-                    <button class="upload-btn" data-target="services.full.image">上传图片</button>
-                </td>
-                <td class="admin-actions">
-                    <button class="admin-btn-small save-service" data-service="full">保存</button>
-                </td>
-            `;
-            servicesBody.appendChild(fullServiceRow);
-            
-            // 全案设计
-            const completeServiceRow = document.createElement('tr');
-            completeServiceRow.innerHTML = `
-                <td>全案设计</td>
-                <td><input type="text" value="${content.services.complete.title}" data-key="services.complete.title"></td>
-                <td><textarea data-key="services.complete.description">${content.services.complete.description}</textarea></td>
-                <td>
-                    <input type="text" value="${content.services.complete.image}" data-key="services.complete.image" readonly>
-                    <button class="upload-btn" data-target="services.complete.image">上传图片</button>
-                </td>
-                <td class="admin-actions">
-                    <button class="admin-btn-small save-service" data-service="complete">保存</button>
-                </td>
-            `;
-            servicesBody.appendChild(completeServiceRow);
-            
-            // 半包服务
-            const semiServiceRow = document.createElement('tr');
-            semiServiceRow.innerHTML = `
-                <td>半包服务</td>
-                <td><input type="text" value="${content.services.semi.title}" data-key="services.semi.title"></td>
-                <td><textarea data-key="services.semi.description">${content.services.semi.description}</textarea></td>
-                <td>
-                    <input type="text" value="${content.services.semi.image}" data-key="services.semi.image" readonly>
-                    <button class="upload-btn" data-target="services.semi.image">上传图片</button>
-                </td>
-                <td class="admin-actions">
-                    <button class="admin-btn-small save-service" data-service="semi">保存</button>
-                </td>
-            `;
-            servicesBody.appendChild(semiServiceRow);
-            
-            // 加载关于我们内容管理
-            const aboutBody = document.getElementById('aboutBody');
-            aboutBody.innerHTML = '';
-            
-            const aboutTitleRow = document.createElement('tr');
-            aboutTitleRow.innerHTML = `
-                <td>关于我们标题</td>
-                <td><input type="text" value="${content.about.title}" data-key="about.title"></td>
-                <td class="admin-actions">
-                    <button class="admin-btn-small save-about">保存</button>
-                </td>
-            `;
-            aboutBody.appendChild(aboutTitleRow);
-            
-            const aboutDescRow = document.createElement('tr');
-            aboutDescRow.innerHTML = `
-                <td>关于我们描述</td>
-                <td><textarea data-key="about.description">${content.about.description}</textarea></td>
-                <td class="admin-actions">
-                    <button class="admin-btn-small save-about">保存</button>
-                </td>
-            `;
-            aboutBody.appendChild(aboutDescRow);
-            
-            const aboutImageRow = document.createElement('tr');
-            aboutImageRow.innerHTML = `
-                <td>关于我们图片</td>
-                <td>
-                    <input type="text" value="${content.about.image}" data-key="about.image" readonly>
-                    <button class="upload-btn" data-target="about.image">上传图片</button>
-                </td>
-                <td class="admin-actions">
-                    <button class="admin-btn-small save-about">保存</button>
-                </td>
-            `;
-            aboutBody.appendChild(aboutImageRow);
-            
-            // 添加上传按钮事件
-            document.querySelectorAll('.upload-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const target = this.getAttribute('data-target');
-                    currentUploadTarget = document.querySelector(`input[data-key="${target}"]`);
-                    imageUploadModal.style.display = 'flex';
-                });
-            });
-            
-            // 添加案例按钮事件
-            document.getElementById('addCase').addEventListener('click', function() {
-                const newCase = {
-                    id: Date.now(),
-                    title: "新案例",
-                    description: "案例描述",
-                    area: "面积",
-                    layout: "户型",
-                    style: "风格",
-                    type: "apartment",
-                    image: ""
-                };
-                
-                content.cases.push(newCase);
-                saveWebsiteContent('cases', content.cases);
-                loadAdminContent();
-            });
-            
-            // 保存按钮事件
-            document.querySelectorAll('.save-home-content').forEach(btn => {
-                btn.addEventListener('click', async function() {
-                    const row = this.closest('tr');
-                    const inputs = row.querySelectorAll('input, textarea');
-                    
-                    inputs.forEach(input => {
-                        const key = input.getAttribute('data-key');
-                        const value = input.value;
-                        
-                        // 更新内容对象
-                        if (key.includes('.')) {
-                            const keys = key.split('.');
-                            let obj = content.homeContent;
-                            
-                            for (let i = 0; i < keys.length - 1; i++) {
-                                if (!obj[keys[i]]) obj[keys[i]] = {};
-                                obj = obj[keys[i]];
-                            }
-                            
-                            obj[keys[keys.length - 1]] = value;
-                        } else {
-                            content.homeContent[key] = value;
-                        }
-                    });
-                    
-                    const success = await saveWebsiteContent('homeContent', content.homeContent);
-                    if (success) {
-                        alert('首页内容已保存！');
-                        loadHomeContent();
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.save-case').forEach(btn => {
-                btn.addEventListener('click', async function() {
-                    const index = this.getAttribute('data-index');
-                    const row = this.closest('tr');
-                    const inputs = row.querySelectorAll('input');
-                    
-                    inputs.forEach(input => {
-                        const key = input.getAttribute('data-key');
-                        const value = input.value;
-                        
-                        // 更新案例对象
-                        const keys = key.split('.');
-                        content.cases[index][keys[2]] = value;
-                    });
-                    
-                    const success = await saveWebsiteContent('cases', content.cases);
-                    if (success) {
-                        alert('案例已保存！');
-                        loadCases();
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.save-service').forEach(btn => {
-                btn.addEventListener('click', async function() {
-                    const serviceType = this.getAttribute('data-service');
-                    const row = this.closest('tr');
-                    const inputs = row.querySelectorAll('input, textarea');
-                    
-                    inputs.forEach(input => {
-                        const key = input.getAttribute('data-key');
-                        const value = input.value;
-                        
-                        // 更新服务对象
-                        const keys = key.split('.');
-                        content.services[keys[1]][keys[2]] = value;
-                    });
-                    
-                    const success = await saveWebsiteContent('services', content.services);
-                    if (success) {
-                        alert('服务内容已保存！');
-                        loadServices();
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.save-about').forEach(btn => {
-                btn.addEventListener('click', async function() {
-                    const row = this.closest('tr');
-                    const inputs = row.querySelectorAll('input, textarea');
-                    
-                    inputs.forEach(input => {
-                        const key = input.getAttribute('data-key');
-                        const value = input.value;
-                        
-                        // 更新关于我们对象
-                        const keys = key.split('.');
-                        content.about[keys[1]] = value;
-                    });
-                    
-                    const success = await saveWebsiteContent('about', content.about);
-                    if (success) {
-                        alert('关于我们内容已保存！');
-                        loadAbout();
-                    }
-                });
-            });
-            
-            // 删除按钮事件
-            document.querySelectorAll('.delete-advantage').forEach(btn => {
-                btn.addEventListener('click', async function() {
-                    const index = this.getAttribute('data-index');
-                    content.homeContent.advantages.splice(index, 1);
-                    
-                    const success = await saveWebsiteContent('homeContent', content.homeContent);
-                    if (success) {
-                        alert('优势已删除！');
-                        loadAdminContent();
-                    }
-                });
-            });
-            
-            document.querySelectorAll('.delete-case').forEach(btn => {
-                btn.addEventListener('click', async function() {
-                    const index = this.getAttribute('data-index');
-                    content.cases.splice(index, 1);
-                    
-                    const success = await saveWebsiteContent('cases', content.cases);
-                    if (success) {
-                        alert('案例已删除！');
-                        loadAdminContent();
-                    }
-                });
-            });
-            
-            // 添加首页内容按钮事件
-            document.getElementById('addHomeContent').addEventListener('click', function() {
-                content.homeContent.advantages.push({
-                    icon: "⭐",
-                    title: "新优势",
-                    description: "优势描述"
-                });
-                
-                saveWebsiteContent('homeContent', content.homeContent);
-                loadAdminContent();
-            });
-        }
+      // 设计风格卡片点击事件
+document.querySelectorAll('.style-card').forEach(card => {
+    card.addEventListener('click', function() {
+        const styleName = this.querySelector('h4').textContent;
+        // 跳转到风格详情页，传递风格名称作为参数
+        window.location.href = `style-detail.html?style=${encodeURIComponent(styleName)}`;
+    });
+});
     </script>
 </body>
 </html>
